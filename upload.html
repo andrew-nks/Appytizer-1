@@ -20,6 +20,49 @@
     <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
     
+    <style>
+      body {font-family: Arial, Helvetica, sans-serif;}
+      * {box-sizing: border-box;}
+      
+      input[type=text], select, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
+      }
+      
+      button {
+        background-color: #04AA6D;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      button:hover {
+        background-color: #45a049;
+      }
+      
+      #container {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+      }
+
+      #btnID{
+        float: right;
+      }
+
+      #submit{
+        color: white;
+      }
+    </style>
+
     <!-- Main CSS File -->
     <link rel="stylesheet" href="Style.css">
 </head>
@@ -95,9 +138,113 @@
         </div>
 
         <!-- Content will be here -->
-        <section> </section>
+        <div class = "container">
+          <div class="d-flex justify-content-between align-items-center">
+            <h1> Upload your Recipe</h1>
+          </div>
+        </div>
+        <section> 
+          <div class="container" id="container">
+            <!--action="UploadSucess.html"-->
+            <form name="form"  onsubmit="return validateForm()" autocomplete="on">
+              <div class="container-fluid">
+                <label for="foodname">Name of the food:</label>
+                <input type="text" id="foodname" name="foodname" placeholder="Name of the food">
+              </div>
+              
+              <div class="container-fluid">
+                <label for="caloriesValues">Please select your calories values: </label>
+                <input type="radio" id="calories1" name="calories" value="300">
+                <label for="calories1">0 - 300</label>
+                <input type="radio" id="calories2" name="calories" value="400">
+                <label for="calories2">300 - 400</label>
+                <input type="radio" id="calories3" name="calories" value="500">
+                <label for="calories3">400 - 500</label>
+                <input type="radio" id="calories4" name="calories" value="600">
+                <label for="calories4">500 - 600</label>
+                <input type="radio" id="calories5" name="calories" value="700">
+                <label for="calories5">600 - 700</label>
+                <input type="radio" id="calories6" name="calories" value="800">
+                <label for="calories6">700 - 800</label>
+              </div>
+              
+              <br>
+
+              <div class="container-fluid" id="ingredients">
+                <label for="Ingredients">Please enter the ingredients needed: </label>
+                <button id="btnID" onclick="addmoreingredients()"> Add Ingredients </button>
+                <br>
+                <br>
+              </div>
+
+              <br>
+              <br>
+              <br>
+
+              <div class="container-fluid" id="methods">
+                <label for="Direction">Please enter the steps: </label>
+                <button id="btnID" onclick="addmoremethod()"> Add Steps </button>
+                <br>
+                <br>
+              </div>
+              
+              <br>
+              <br>
+              <br>
+
+              <button type="submit" value="Submit" onsubmit="validateForm()" onclick="submit()">Submit </button>
+    
+            </form>
+          </div>
+        </section>
 
     </main>
+
+    <script>
+    var x = 1; 
+    var i = 1;
+    function addmoreingredients() {
+      var ingredients = document.getElementById('ingredients');
+      const y = x++;
+      ingredients.innerHTML += "Ingredients " + y + ": <input type='text' name='ingredients' placeholder='Ingredients " + y +"'>";
+      
+    };
+
+    function addmoremethod() {
+      var methods = document.getElementById('methods');
+      const z = i++;
+      methods.innerHTML += "Steps " + z + ": <textarea name='steps' placeholder='Enter the steps " + z + "'of the cooking method...' style='height:100px'></textarea>";
+      
+    };
+
+    function validateForm(){
+      var foodname = document.getElementById("foodname")[0].value;
+      console.log(foodname)
+      var ingredients = document.getElementById("ingredients")[0].value;
+      var methods = document.getElementById("methods")[0].value;
+      var msg = "";
+
+      if (foodname.length == 0){
+        msg += "Please enter a name for your food\n";
+      }
+
+      if (ingredients.length == 0){
+        msg += "Please enter at least 1 ingredients";
+      }
+
+      if (msg != "") {
+        alert(msg);
+        return false;
+      } 
+      else {
+        return true;
+      }
+    };
+
+    function submit(){
+
+    };
+    </script>
 
     <!-- Footer -->
     <footer id="footer" class="footer">
@@ -180,4 +327,6 @@
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
+    <!--Firebase-->
+    <script src="Firebase.js"></script>
 </body>
