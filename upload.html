@@ -68,6 +68,9 @@
 </head>
 
 <body>
+
+  
+
     <header id="header" class="header fixed-top d-flex align-items-center">
         <div class="container d-flex align-items-center justify-content-between">
             <a href="Home.html" class="logo d-flex align-items-center me-auto me-lg-0">
@@ -146,44 +149,79 @@
         <section> 
           <div class="container" id="container">
             <!--action="UploadSucess.html"-->
-            <form name="form"  onsubmit="return validateForm()" autocomplete="on">
+            <form name="form"   autocomplete="on">
               <div class="container-fluid">
                 <label for="foodname">Name of the food:</label>
                 <input type="text" id="foodname" name="foodname" placeholder="Name of the food">
               </div>
               
               <div class="container-fluid">
-                <label for="caloriesValues">Please select your calories values: </label>
-                <input type="radio" id="calories1" name="calories" value="300">
-                <label for="calories1">0 - 300</label>
-                <input type="radio" id="calories2" name="calories" value="400">
-                <label for="calories2">300 - 400</label>
-                <input type="radio" id="calories3" name="calories" value="500">
-                <label for="calories3">400 - 500</label>
-                <input type="radio" id="calories4" name="calories" value="600">
-                <label for="calories4">500 - 600</label>
-                <input type="radio" id="calories5" name="calories" value="700">
-                <label for="calories5">600 - 700</label>
-                <input type="radio" id="calories6" name="calories" value="800">
-                <label for="calories6">700 - 800</label>
+                <label for="caloriesValues">Please enter your nutritional values: </label>
+                <input type="text" id="calories" name="calories" placeholder="Calories">
+
+                
+                <input type="text" id="fat" name="fat" placeholder="Fat (in grams)">
+
+                
+                <input type="text" id="carbs" name="carbs" placeholder="Carbs (in grams)">
+
+                
+                <input type="text" id="protein" name="protein" placeholder="Protein (in grams)">
+
+              </div>
+
+              <br>
+
+              <div class="container-fluid">
+                <label for="caloriesValues">Prep time: </label>
+                <input type="text" id="prep" name="prep" placeholder="Minutes">
               </div>
               
               <br>
 
-              <div class="container-fluid" id="ingredients">
-                <label for="Ingredients">Please enter the ingredients needed: </label>
-                <button id="btnID" onclick="addmoreingredients()"> Add Ingredients </button>
+              <div class="container-fluid">
+                <label for="caloriesValues">Cook time: </label>
+                <input type="text" id="cook" name="cook" placeholder="Minutes">
+              </div>
+              
+              <br>
+
+              <div class="container-fluid">
+                <label for="caloriesValues">Rest time: </label>
+                <input type="text" id="rest" name="rest" placeholder="Minutes">
+              </div>
+              
+              <br>
+
+              <div class="container-fluid">
+                <label for="caloriesValues">Total: </label>
+                <input type="text" id="total" name="total" placeholder="Minutes">
+              </div>
+              
+              <br>
+
+              <div class="container-fluid">
+                <label for="caloriesValues">Servings: </label>
+                <input type="text" id="serving" name="serving" placeholder="servings">
+              </div>
+              
+              <br>
+
+              <div class="container-fluid" >
+                <label for="ingredients">Please enter the ingredients needed: </label>
+                <br><italic>(Please separate each ingredients with comma)</italic>
+                <textarea id="ingredients" name="ingredients" placeholder="Name of the ingredients" style='height:100px'></textarea>
                 <br>
                 <br>
               </div>
 
-              <br>
-              <br>
-              <br>
+             
 
-              <div class="container-fluid" id="methods">
-                <label for="Direction">Please enter the steps: </label>
-                <button id="btnID" onclick="addmoremethod()"> Add Steps </button>
+              <div class="container-fluid">
+                <label for="Direction">Please enter the steps (ending with a fullstop): </label>
+                <br><italic>(e.g 1. Heat the oven for 10 minutes.</italic>
+                <br><italic>2. Put the ingredients into the oven for 20 minutes.)</italic>
+                <textarea id="methods" name="methods" placeholder="Steps for preparation" style='height:100px'></textarea>
                 <br>
                 <br>
               </div>
@@ -192,60 +230,158 @@
               <br>
               <br>
 
-              <button type="submit" value="Submit" onsubmit="validateForm()" onclick="submit()">Submit </button>
-    
+              <button type="button"  id="submitForm" >Submit </button>
+              
+              <script type="module" >
+                import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+                import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
+                import { getStorage, ref } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-storage.js";
+                
+                const firebaseConfig = {
+                        // Your configaration code here
+                        apiKey: "AIzaSyAFJmlaUL5fNmNKnX37xkB-2erJ_avQvRg",
+                      authDomain: "appytizer-d57f2.firebaseapp.com",
+                      databaseURL: "https://appytizer-d57f2-default-rtdb.asia-southeast1.firebasedatabase.app",
+                      projectId: "appytizer-d57f2",
+                      storageBucket: "appytizer-d57f2.appspot.com",
+                      messagingSenderId: "758981637290",
+                      appId: "1:758981637290:web:d4b61652c85549f0854cd3",
+                      };
+
+                      // Initialize Firebase
+                      const app = initializeApp(firebaseConfig);
+                      const analytics = getAnalytics(app);
+                      
+                      // Get a reference to the database service
+                      import{
+          getFirestore, doc, getDoc, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField
+      }
+      from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+                      
+                      const db = getFirestore();
+                    
+
+                    // function to add recipe
+                    async function addRecipe() {
+                      
+                      var foodName = document.getElementById('foodname').value                    
+                      var calories = document.getElementById('calories').value;
+                      var fat = document.getElementById('fat').value;
+                      var carbs = document.getElementById('carbs').value;
+                      var protein = document.getElementById('protein').value;
+
+                      var prep = document.getElementById('prep').value;
+                      var cook = document.getElementById('cook').value;
+                      var rest = document.getElementById('rest').value;
+                      var total = document.getElementById('total').value;
+                      var serving = document.getElementById('serving').value;
+
+                      var ingredients = document.getElementById('ingredients').value.split(",");
+                      var steps = document.getElementById('methods').value.split("\n");
+                      var msg = "";
+
+                      if (foodName.length == 0){
+                        msg += "Please enter a name for your food\n";
+                        
+                      }
+                      if (calories.length == 0){
+                        msg += "Please enter the calories\n";
+                        
+                      }
+                      if (fat.length == 0){
+                        msg += "Please enter the fat\n";
+                        
+                      }
+                      if (carbs.length == 0){
+                        msg += "Please enter the carbs\n";
+                        
+                      }
+                      if (protein.length == 0){
+                        msg += "Please enter the protein\n";
+                        
+                      }
+
+                      if (prep.length == 0){
+                        msg += "Please enter the prep time\n";
+                        
+                      }
+                      if (cook.length == 0){
+                        msg += "Please enter the cook time\n";
+                        
+                      }
+                      if (rest.length == 0){
+                        msg += "Please enter the rest time\n";
+                        
+                      } 
+                      if (total.length == 0){
+                        msg += "Please enter the total time\n";
+                        
+                      }
+                      
+                      if (serving.length == 0){
+                        msg += "Please enter the serving\n";
+                        
+                      }
+
+                    
+                      if (ingredients.length == 1){
+                        msg += "Please enter at least 1 ingredient";
+                      }
+
+                      if (steps.length == ''){
+                        msg += "Please enter at least 1 step";
+                      }
+                      
+                      if (msg != "") {
+                        alert(msg);
+                        return false;
+                      } 
+                      else {
+                        // add recipe to database
+                       
+                       const docRef = await addDoc(collection(db, "recipes"), {
+                          name: foodName,
+                          calories: calories,
+                          fat: fat,
+                          carbs: carbs,
+                          protein: protein,
+                          prep: prep,
+                          cook: cook,
+                          rest: rest,
+                          total: total,
+                          serving: serving,
+                          ingredients: ingredients,
+                          steps: steps,
+                          });
+                          console.log("Document written with ID: ", docRef.id);
+                          alert("Your recipe has been uploaded successfully!");
+                          
+
+                        
+
+                        
+
+                      }
+
+                      
+                    };
+                  submitForm.addEventListener("click", addRecipe);
+                
+              </script>
+              </script>
+
+              
+              
             </form>
+
           </div>
+
+          
         </section>
 
     </main>
-
-    <script>
-    var x = 1; 
-    var i = 1;
-    function addmoreingredients() {
-      var ingredients = document.getElementById('ingredients');
-      const y = x++;
-      ingredients.innerHTML += "Ingredients " + y + ": <input type='text' name='ingredients' placeholder='Ingredients " + y +"'>";
-      
-    };
-
-    function addmoremethod() {
-      var methods = document.getElementById('methods');
-      const z = i++;
-      methods.innerHTML += "Steps " + z + ": <textarea name='steps' placeholder='Enter the steps " + z + "'of the cooking method...' style='height:100px'></textarea>";
-      
-    };
-
-    function validateForm(){
-      var foodname = document.getElementById("foodname")[0].value;
-      console.log(foodname)
-      var ingredients = document.getElementById("ingredients")[0].value;
-      var methods = document.getElementById("methods")[0].value;
-      var msg = "";
-
-      if (foodname.length == 0){
-        msg += "Please enter a name for your food\n";
-      }
-
-      if (ingredients.length == 0){
-        msg += "Please enter at least 1 ingredients";
-      }
-
-      if (msg != "") {
-        alert(msg);
-        return false;
-      } 
-      else {
-        return true;
-      }
-    };
-
-    function submit(){
-
-    };
-    </script>
-
+    
+    
     <!-- Footer -->
     <footer id="footer" class="footer">
 
@@ -327,6 +463,10 @@
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
-    <!--Firebase-->
-    <script src="Firebase.js"></script>
+
 </body>
+</html>
+
+<!-- Our script must be loaded after firebase references -->
+<!-- <script src="firebase.js"></script> -->
+
