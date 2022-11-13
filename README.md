@@ -23,13 +23,22 @@ Notes:
 Navigation Diagram:
  <img width="863" alt="Screenshot 2022-11-13 at 21 18 47" src="https://user-images.githubusercontent.com/105425871/201523741-d1e21733-1526-4b8a-88ad-e87cfcf45255.png">
  
- # How to install and run our web appication!
+ # How to download and run our web appication!
 - This method is applicable to both Mac OS and Windows OS
 
-Firstly, you have to clone this repository into your local environment
+Firstly, you have to download the zip file into your local environment
 1. On the '<> Code' page, click on the green 'code' button and a dropdown will appear.
-2. Make sure you're under the 'HTTPS' tab, and copy the URL.
+2. Select download zip file.
+3. Place your zip file anywhere in your folders and you can directly open the "home.html" file from your folder.
 
+# How to use our web application!
+1. Once at our Homepage, click on Register/Log In
+<img width="1425" alt="Screenshot 2022-11-13 at 21 28 38" src="https://user-images.githubusercontent.com/105425871/201524194-b46f284e-733c-4876-825a-9baeffccdc00.png">
+
+2. Create a new account by clicking on the "Register" Tab. Once your account has been succesfully registered, you will be alerted. Now proceed to "Login" tab to log in as an Appytiser user.
+<insert image>
+
+3. 
 
 To do:
 1. nav bar 
