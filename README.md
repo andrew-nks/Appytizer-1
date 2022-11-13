@@ -38,53 +38,29 @@ Firstly, you have to download the zip file into your local environment
 2. Create a new account by clicking on the "Register" Tab. Once your account has been succesfully registered, you will be alerted. Now proceed to "Login" tab to log in as an Appytiser user.
 <insert image>
 
+3. Users can get food reccommendations directly from our home page based on the live weather.
+ - In the screenshot below, the current weather is cloudy. Hence, the reccommendation.
+<img width="1424" alt="Screenshot 2022-11-13 at 21 35 12" src="https://user-images.githubusercontent.com/105425871/201524505-d513a6e8-db7d-418b-b0e5-00ffaaf3d621.png">
+ 
+ 4. Users are then able to proceed to the "Places to Go" page to search for resturants or marketplaces they would like to visit, depending on whether they want to eat out or cook.
+ - For Market to go, users can click the "Nearby Markets" button and allow to share their locations.
+<img width="1425" alt="Screenshot 2022-11-13 at 21 41 01" src="https://user-images.githubusercontent.com/105425871/201524793-805f20fd-e7fa-4e41-916f-aa3b4645aeec.png">
+ 
+ - For Restaurants to go, users can search the food item they want (e.g. fish). They can also edit the raidius proximity if needed.
+ <img width="1426" alt="Screenshot 2022-11-13 at 21 44 39" src="https://user-images.githubusercontent.com/105425871/201524933-ec663acb-f677-4859-9360-955dbc36e321.png">
+
+5. For Restaurants, users can save food places they like by double-clicking on the shop icon on the map and they will be added to "Saved Places" under Account tab. Users can then view their saved places there.
+ <img width="1420" alt="Screenshot 2022-11-13 at 21 46 06" src="https://user-images.githubusercontent.com/105425871/201524995-7efbfa77-ce9d-4190-8053-23dafb1790b9.png">
+
+6. A Recipes page is also available for users to:
+ - upload their recipe (under "Upload Recipes" tab)
+<img width="1423" alt="Screenshot 2022-11-13 at 21 48 10" src="https://user-images.githubusercontent.com/105425871/201525099-4f8e1fee-a2c1-407c-b2d8-54ece3dc0338.png">
+ 
+ - view all available recipes (under "View Recipes" tab)
+<img width="1424" alt="Screenshot 2022-11-13 at 21 49 04" src="https://user-images.githubusercontent.com/105425871/201525147-2443bf5f-94d9-4a54-bf4d-79d9353a773f.png">
+ 
+7. After viewing all recipes, users can also save their recipes and it will be saved to the "Saved Recipes" under Account tab.
+<insert image>
+ 
 
 
-To do:
-1. nav bar 
-  a) add in the weather of the day (weather api)
-  b) add in search function via keyword and filer (catergory) (aoxis api)
-
-2. home.html
-  a) recommendation based on the weather of day (hard code kind of way)
-  b) about us portion will require to do rewriting 
-  c) review portion also need to change 
-
-<-- If the user had logged in, this will be disabled -->
-3. register.html
-  a) detailed entered to be save into database 
-
-<-- If the user had logged in, this will be disabled -->
-4. login.html 
-  a) details to be extracted from database 
-
-<-- This is to be disabled if the user is not an account holder -->
-5. upload.html
-  a) design the form 
-  b) save the details into the database
-
-6. recipes.html 
-  a) design into card album format 
-  b) extract data from database and display in card album 
-
-7. market.html
-  a) design into card album format 
-  b) extract data from database and display in card album (google map api)
-  c) like function to save the market to database 
-
-8. restaurant.html 
-  a) design into card album format 
-  b) extract data from database and display in card album (google map api)  
-  c) like function to save the market to database 
-
-<-- This is to be disabled if the user is not an account holder -->
-9. account.html 
-  a) display the uploaded recipes --> to extract from html 
-  
-10. setting.html --> forgo if no time 
-  
-11. savedplaces.html 
-  a) extract data from database and display in card album (google map api) 
-  
-12. savedplaces.html 
-  a) extract data from database and display in card album (google map api)
