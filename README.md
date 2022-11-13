@@ -23,7 +23,7 @@ Notes:
 Navigation Diagram:
  <img width="863" alt="Screenshot 2022-11-13 at 21 18 47" src="https://user-images.githubusercontent.com/105425871/201523741-d1e21733-1526-4b8a-88ad-e87cfcf45255.png">
  
- # How to download and run our web appication!
+ # How to download and run our web appication
 - This method is applicable to both Mac OS and Windows OS
 
 Firstly, you have to download the zip file into your local environment
@@ -31,7 +31,7 @@ Firstly, you have to download the zip file into your local environment
 2. Select download zip file.
 3. Place your zip file anywhere in your folders and you can directly open the "home.html" file from your folder.
 
-# How to use our web application!
+# How to use our web application
 1. Once at our Homepage, click on Register/Log In
 <img width="1425" alt="Screenshot 2022-11-13 at 21 28 38" src="https://user-images.githubusercontent.com/105425871/201524194-b46f284e-733c-4876-825a-9baeffccdc00.png">
 
