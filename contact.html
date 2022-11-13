@@ -73,7 +73,7 @@
             </nav>
 
             <!-- Login/Register  -> this will appear only if the website is not logged in -->
-            <a class="btn-book-a-table" href="register.html">Register/Login</a>
+            <a class="btn-book-a-table" id="login" href="register.html">Register/Login</a>
             <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
             <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
         </div>
@@ -281,6 +281,53 @@
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <div id="preloader"></div>
+    
+    <!-- Disable links if not logged in -->
+    <script>
+      let status = sessionStorage.getItem('status');
+      console.log(status);
+      let email = sessionStorage.getItem('current_email');
+          console.log(email);
+      var uploadLink = document.getElementById('upload');
+      var accountLink = document.getElementById('account');
+      var setting = document.getElementById('setting');
+      var savedplaces = document.getElementById('savedplaces');
+      var savedrecipes = document.getElementById('savedrecipes');
+      if (status == null) {
+        document.addEventListener('click', function (e) {
+            if (e.target.id === uploadLink.id) {
+                e.preventDefault();
+                alert('Please login to upload your recipe');
+            }
+            if (e.target.id === accountLink.id) {
+                e.preventDefault();
+                alert('Please login to view your account');
+            }
+            if (e.target.id === setting.id) {
+                e.preventDefault();
+                alert('Please login to view your settings');
+            }
+            if (e.target.id === savedplaces.id) {
+                e.preventDefault();
+                alert('Please login to view your saved places');
+            }
+            if (e.target.id === savedrecipes.id) {
+                e.preventDefault();
+                alert('Please login to view your saved recipes');
+            }
+        });
+      }
+      else if (status == 'loggedIn') {
+
+            document.getElementById("login").text = 'Logout';
+            login.addEventListener('click', function () {
+              sessionStorage.removeItem('status');
+              sessionStorage.removeItem('current_email');
+              window.location.href = "home.html";
+            });
+
+          }
+    </script>
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
