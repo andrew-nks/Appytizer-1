@@ -4,7 +4,7 @@ IS216 Project
 Style.css is the external CSS file for our webpage design.
 
 <-- This can be ignored --> 
-The assest folder consist of all the image and javascript for some of design function.
+The assest folder consist of all the images and javascript for some of design function. All images are accessed from the asset folder, followed by img foler.
   
 To do:
 1. nav bar 
