@@ -58,9 +58,7 @@ Firstly, you have to download the zip file into your local environment
  
  - view all available recipes (under "View Recipes" tab)
 <img width="1424" alt="Screenshot 2022-11-13 at 21 49 04" src="https://user-images.githubusercontent.com/105425871/201525147-2443bf5f-94d9-4a54-bf4d-79d9353a773f.png">
- 
-7. After viewing all recipes, users can also save their recipes and it will be saved to the "Saved Recipes" under Account tab.
-<insert image>
+
  
 
 
