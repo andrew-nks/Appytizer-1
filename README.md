@@ -38,7 +38,7 @@ Firstly, you have to download the zip file into your local environment
 2. Create a new account by clicking on the "Register" Tab. Once your account has been succesfully registered, you will be alerted. Now proceed to "Login" tab to log in as an Appytiser user.
 <insert image>
 
-3. 
+
 
 To do:
 1. nav bar 
