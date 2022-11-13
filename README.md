@@ -14,11 +14,14 @@ In today's 21st century issues, we realise that many people are indecisive when 
 To solve this:
 Introducing Appytizer, which allows users to have food items reccommended for them based on the live weather. This would at least help users to have an idea of food suggestions they may crave. Also, our suggested recipes require users to input its calories, this greatly helps many sieve out food choices. Additionally, we implemented a search function that allows users to search for marketplaces or restaurants around the area based on the food item they feel like having.
 
-Style.css is the external CSS file for our webpage design.
+# Implementation
 
-<-- This can be ignored --> 
-The assest folder consist of all the images and javascript for some of design function. All images are accessed from the asset folder, followed by img foler.
-  
+Notes:
+- Style.css is the external CSS file for our webpage design.
+- The assest folder consist of all the images and javascript for some of design function. All images are accessed from the asset folder, followed by img foler.
+
+ <img width="863" alt="Screenshot 2022-11-13 at 21 18 47" src="https://user-images.githubusercontent.com/105425871/201523741-d1e21733-1526-4b8a-88ad-e87cfcf45255.png">
+
 To do:
 1. nav bar 
   a) add in the weather of the day (weather api)
