@@ -379,7 +379,57 @@ from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
   submit.addEventListener("click", register);
   
 </script>
+<!-- Disable links if not logged in -->
+<script>
+  let status = sessionStorage.getItem('status');
+  console.log(status);
 
+  let email = sessionStorage.getItem('current_email');
+      console.log(email);
+
+  var uploadLink = document.getElementById('upload');
+  var accountLink = document.getElementById('account');
+  var setting = document.getElementById('setting');
+  var savedplaces = document.getElementById('savedplaces');
+  var savedrecipes = document.getElementById('savedrecipes');
+
+  if (status == null) {
+    document.addEventListener('click', function (e) {
+        if (e.target.id === uploadLink.id) {
+            e.preventDefault();
+            alert('Please login to upload your recipe');
+        }
+        if (e.target.id === accountLink.id) {
+            e.preventDefault();
+            alert('Please login to view your account');
+        }
+        if (e.target.id === setting.id) {
+            e.preventDefault();
+            alert('Please login to view your settings');
+        }
+        if (e.target.id === savedplaces.id) {
+            e.preventDefault();
+            alert('Please login to view your saved places');
+        }
+        if (e.target.id === savedrecipes.id) {
+            e.preventDefault();
+            alert('Please login to view your saved recipes');
+        }
+    });
+  }
+  else if (status == 'loggedIn') {
+        
+        document.getElementById("login").text = 'Logout';
+        login.addEventListener('click', function () {
+          sessionStorage.removeItem('status');
+          sessionStorage.removeItem('current_email');
+          window.location.href = "home.html";
+        });
+        
+
+      }
+
+</script>
 
 
 </html>
