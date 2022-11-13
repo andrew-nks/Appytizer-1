@@ -21,7 +21,12 @@
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
     
     <style>
-      body {font-family: Arial, Helvetica, sans-serif;}
+      .recipe-header {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-weight: bold;
+      }
+
+      body {font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;}
       * {box-sizing: border-box;}
       
       input[type=text], select, textarea {
@@ -36,7 +41,7 @@
       }
       
       button {
-        background-color: #04AA6D;
+        background-color: #697a6e;
         color: white;
         padding: 12px 20px;
         border: none;
@@ -50,7 +55,7 @@
       
       #container {
         border-radius: 5px;
-        background-color: #f2f2f2;
+        background-color: white;
         padding: 20px;
       }
 
@@ -60,6 +65,67 @@
 
       #submit{
         color: white;
+      }
+
+      /* Top Section */
+      .upload {
+          width: 100%;
+          background-size: cover;
+          position: relative;
+          min-height: 60vh;
+          padding: 100px 0 100px 0;
+          background-color: rgb(250, 243, 232);
+          background-size: 5em;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='18' viewBox='0 0 100 18'%3E%3Cpath fill='%23f7f4f0' fill-opacity='0.1' d='M61.82 18c3.47-1.45 6.86-3.78 11.3-7.34C78 6.76 80.34 5.1 83.87 3.42 88.56 1.16 93.75 0 100 0v6.16C98.76 6.05 97.43 6 96 6c-9.59 0-14.23 2.23-23.13 9.34-1.28 1.03-2.39 1.9-3.4 2.66h-7.65zm-23.64 0H22.52c-1-.76-2.1-1.63-3.4-2.66C11.57 9.3 7.08 6.78 0 6.16V0c6.25 0 11.44 1.16 16.14 3.42 3.53 1.7 5.87 3.35 10.73 7.24 4.45 3.56 7.84 5.9 11.31 7.34zM61.82 0h7.66a39.57 39.57 0 0 1-7.34 4.58C57.44 6.84 52.25 8 46 8S34.56 6.84 29.86 4.58A39.57 39.57 0 0 1 22.52 0h15.66C41.65 1.44 45.21 2 50 2c4.8 0 8.35-.56 11.82-2z'%3E%3C/path%3E%3C/svg%3E");
+          
+      }
+
+      .upload h2 {
+          font-size: 64px;
+          font-weight: 700;
+          margin-bottom: 20px;
+          color: black;
+          font-family: Georgia, 'Times New Roman', Times, serif;
+
+      }
+
+      .upload h2 span {
+          color: var(--color-primary);
+      }
+
+      .upload p {
+          color: #3f3f3f;
+          font-weight: 400;
+          margin-bottom: 30px;
+      }
+
+      .button-text {
+        font-size: large;
+        font-weight: bold;
+      }
+
+      .upload .btn-book-a-table {
+          font-weight: 500;
+          font-size: 14px;
+          letter-spacing: 1px;
+          display: inline-block;
+          padding: 12px 36px;
+          border-radius: 1px;
+          transition: 0.5s;
+          color: #fff;
+          background: var(--color-primary);
+          box-shadow: 0 8px 28px rgba(29, 28, 28, 0.2);
+      }
+        
+      @media (max-width: 640px) {
+          .upload h2 {
+              font-size: 36px;
+          }
+
+          .upload .btn-get-started,
+          .upload .btn-watch-video {
+              font-size: 14px;
+          }
       }
     </style>
 
@@ -103,16 +169,17 @@
                     </li>
                     <!-- Only after user login then this will be appeared -->
                     <li class="dropdown"><a href="account.html"><span>Account</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                        <ul>
-                            <li>
-                                <a href="setting.html">Account Setting</a>
-                            </li>
-                            <li>
-                                <a href="savedrecipes.html"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Recipes</a>
-                            <li>
-                                <a href="savedplaces.html"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Places</a>
-                            </li>
-                        </ul>
+                      <ul>
+                        <li>
+                          <a href="setting.html">Account Setting</a>
+                        </li>
+                        <li>
+                          <a href="savedrecipes.html">&#10084; Saved Recipes</a>
+                        </li>
+                        <li>
+                          <a href="savedplaces.html">&#10084; Saved Places</a>
+                        </li>
+                      </ul>
                     </li>
                     <li><a href="contact.html">Contact Me</a></li>
                 </ul>     
@@ -134,29 +201,51 @@
                         <li>
                             <a href="upload.html">Recipes</a>
                         </li>
-                        <li>Upload your recipes</li>
+                        <li>Recipe Upload</li>
                     </ol>
                 </div>
             </div>
         </div>
 
         <!-- Content will be here -->
-        <div class = "container">
-          <div class="d-flex justify-content-between align-items-center">
-            <h1> Upload your Recipe</h1>
+
+        <!-- Top section -->
+        <section id="upload" class="upload d-flex align-items-center">
+          <div class="container ps-5 pe-5">
+            <div class="row justify-content-center gy-5">
+
+              <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
+                <h2 data-aos="fade-right">Upload your<br>Recipes below!</h2>
+                <p data-aos="fade-right"><i>Share your pride & joy with others by sharing your recipe with the community.</i></p>
+                <div class="d-flex mt-5" data-aos="fade-right" data-aos-delay="200">
+                  <p class="button-text"> See what others have shared?</p>
+                  
+                </div>
+                <div class="d-flex" data-aos="fade-right" data-aos-delay="200">
+                  <a href="recipes.html" class="btn btn-outline-dark">View All Recipes <i class="bi bi-arrow-right-circle-fill"></i></a>
+                </div>
+              </div>
+
+              <div class="col-lg-6 order-1 order-lg-2 text-center text-lg-start">
+                <img src="assets/img/cooking.jpg" class="img-fluid" alt="" data-aos="fade-left" data-aos-delay="300">
+              </div>
+            </div>
           </div>
-        </div>
-        <section> 
-          <div class="container" id="container">
+        </section>
+
+        <!-- Form Section-->
+        <section class="pt-4"> 
+          <div class="container text-align-center" data-aos="fade-up" id="container">
             <!--action="UploadSucess.html"-->
-            <form name="form"   autocomplete="on">
+            <h1 class="recipe-header ps-3 mt-4 mb-4">My Recipe</h1>
+            <form name="form" autocomplete="on">
               <div class="container-fluid">
                 <label for="foodname">Name of the food:</label>
                 <input type="text" id="foodname" name="foodname" placeholder="Name of the food">
               </div>
               
               <div class="container-fluid">
-                <label for="caloriesValues">Please enter your nutritional values: </label>
+                <label for="caloriesValues">Nutritional values: </label>
                 <input type="text" id="calories" name="calories" placeholder="Calories">
 
                 
@@ -208,20 +297,19 @@
               <br>
 
               <div class="container-fluid" >
-                <label for="ingredients">Please enter the ingredients needed: </label>
-                <br><italic>(Please separate each ingredients with comma)</italic>
+                <label for="ingredients">Please enter the ingredients (ending with semicolon <bold>;</bold>): </label>
+                <label> Please indicate the amount needed</label>
+                <br><italic>(e.g 1/2 cup of flour; 2 eggs; 3 teaspoon sugar; a pinch of salt)</italic>
                 <textarea id="ingredients" name="ingredients" placeholder="Name of the ingredients" style='height:100px'></textarea>
                 <br>
                 <br>
               </div>
 
-             
-
               <div class="container-fluid">
                 <label for="Direction">Please enter the steps (ending with a fullstop): </label>
                 <br><italic>(e.g 1. Heat the oven for 10 minutes.</italic>
                 <br><italic>2. Put the ingredients into the oven for 20 minutes.)</italic>
-                <textarea id="methods" name="methods" placeholder="Steps for preparation" style='height:100px'></textarea>
+                <textarea id="methods" name="methods" placeholder="Steps for preparation" style='height:350px'></textarea>
                 <br>
                 <br>
               </div>
@@ -230,12 +318,14 @@
               <br>
               <br>
 
-              <button type="button"  id="submitForm" >Submit </button>
-              
+              <div class="ps-3">
+                <button type="button"  id="submitForm" >Upload </button>
+              </div>
+
               <script type="module" >
                 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
                 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
-                import { getStorage, ref } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-storage.js";
+                import { getStorage, ref, uploadBytes as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-storage.js";
                 
                 const firebaseConfig = {
                         // Your configaration code here
@@ -254,12 +344,31 @@
                       
                       // Get a reference to the database service
                       import{
-          getFirestore, doc, getDoc, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField
+          getFirestore, doc, getDoc, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField, arrayUnion, arrayRemove 
       }
       from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
                       
                       const db = getFirestore();
-                    
+
+                      let email = sessionStorage.getItem('current_email');
+                      console.log(email);
+
+                      // Log out function
+                      let status = sessionStorage.getItem('status');
+                      console.log(status);     
+                          
+                      if (status == 'loggedIn') {
+        
+                          document.getElementById("login").text = 'Logout';
+                          login.addEventListener('click', function () {
+                            sessionStorage.removeItem('status');
+                            sessionStorage.removeItem('current_email');
+                            window.location.href = "home.html";
+                            
+                          });
+        
+
+      }
 
                     // function to add recipe
                     async function addRecipe() {
@@ -276,9 +385,12 @@
                       var total = document.getElementById('total').value;
                       var serving = document.getElementById('serving').value;
 
-                      var ingredients = document.getElementById('ingredients').value.split(",");
+                      var description = document.getElementById('description').value;
+                      var ingredients = document.getElementById('ingredients').value.split(";");
                       var steps = document.getElementById('methods').value.split("\n");
                       var msg = "";
+
+                      var user_email = sessionStorage.getItem('current_email');
 
                       if (foodName.length == 0){
                         msg += "Please enter a name for your food\n";
@@ -300,7 +412,10 @@
                         msg += "Please enter the protein\n";
                         
                       }
-
+                      if (description.length == 0){
+                        msg += "Please enter the description\n";
+                        
+                      }
                       if (prep.length == 0){
                         msg += "Please enter the prep time\n";
                         
@@ -325,7 +440,7 @@
 
                     
                       if (ingredients.length == 1){
-                        msg += "Please enter at least 1 ingredient";
+                        msg += "Please enter at least 1 ingredient\n";
                       }
 
                       if (steps.length == ''){
@@ -338,9 +453,9 @@
                       } 
                       else {
                         // add recipe to database
-                       
-                       const docRef = await addDoc(collection(db, "recipes"), {
-                          name: foodName,
+                      const recipeRef = collection(db, "recipes");
+                      const newRecipe = {
+                        name: foodName,
                           calories: calories,
                           fat: fat,
                           carbs: carbs,
@@ -350,33 +465,44 @@
                           rest: rest,
                           total: total,
                           serving: serving,
+                          desc: description,
                           ingredients: ingredients,
                           steps: steps,
-                          });
-                          console.log("Document written with ID: ", docRef.id);
-                          alert("Your recipe has been uploaded successfully!");
-                          
+                      };
+                      const docRef = await setDoc(doc(recipeRef, foodName),{
+                        newRecipe
+                      });
 
-                        
+                      
+                      const userRef = doc(db, "users", user_email);
 
-                        
+                      await updateDoc(userRef, {
+                        uploadedRecipes: arrayUnion(newRecipe)
+                      });
 
+                      
+                      alert("Your recipe has been uploaded successfully!");
                       }
+                       
+                  
+                      
+                        
+
+                        
+
+                   
 
                       
                     };
                   submitForm.addEventListener("click", addRecipe);
                 
               </script>
-              </script>
-
               
               
-            </form>
-
-          </div>
-
           
+ 
+            </form>
+          </div>
         </section>
 
     </main>
@@ -385,69 +511,72 @@
     <!-- Footer -->
     <footer id="footer" class="footer">
 
-        <div class="container">
-          <div class="row gy-3">
-            <div class="col-lg-3 col-md-6 d-flex">
-              <i class="bi bi-geo-alt icon"></i>
-              <div>
-                <h4>Address</h4>
-                <p>
-                  A108 Adam Street <br>
-                  New York, NY 535022 - US<br>
-                </p>
-              </div>
-    
+      <div class="container">
+        <div class="row gy-3">
+          <div class="col-lg-3 col-md-6 d-flex">
+            <i class="bi bi-geo-alt icon"></i>
+            <div>
+              <h4>Address</h4>
+              <p>
+                80 Stamford Rd<br>
+                Singapore, S178902 <br>
+              </p>
             </div>
-    
-            <div class="col-lg-3 col-md-6 footer-links d-flex">
-              <i class="bi bi-telephone icon"></i>
-              <div>
-                <h4>Reservations</h4>
-                <p>
-                  <strong>Phone:</strong> +1 5589 55488 55<br>
-                  <strong>Email:</strong> info@example.com<br>
-                </p>
-              </div>
-            </div>
-    
-            <div class="col-lg-3 col-md-6 footer-links d-flex">
-              <i class="bi bi-clock icon"></i>
-              <div>
-                <h4>Opening Hours</h4>
-                <p>
-                  <strong>Mon-Sat: 11AM</strong> - 23PM<br>
-                  Sunday: Closed
-                </p>
-              </div>
-            </div>
-    
-            <div class="col-lg-3 col-md-6 footer-links">
-              <h4>Follow Us</h4>
-              <div class="social-links d-flex">
-                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-              </div>
-            </div>
-    
+  
           </div>
+  
+          <div class="col-lg-3 col-md-6 footer-links d-flex">
+            <i class="bi bi-telephone icon"></i>
+            <div>
+              <h4>Reservations</h4>
+              <p>
+                <strong>Phone:</strong> +65 68087960
+                <br>
+                <strong>Email:</strong> contact@smu.edu.com.sg
+                <br>
+              </p>
+            </div>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 footer-links d-flex">
+            <i class="bi bi-clock icon"></i>
+            <div>
+              <h4>Opening Hours</h4>
+              <p>
+                <strong>Monday to Friday : 8:30AM</strong> to 5:45PM
+                <br>
+                Saturday & Sunday: Closed
+              </p>
+            </div>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Follow Us</h4>
+            <div class="social-links d-flex">
+              <a href="https://twitter.com/sgSMU" class="twitter"><i class="bi bi-twitter"></i></a>
+              <a href="https://www.facebook.com/sgsmu" class="facebook"><i class="bi bi-facebook"></i></a>
+              <a href="https://www.instagram.com/sgsmuscis/?hl=en" class="instagram"><i class="bi bi-instagram"></i></a>
+              <a href="https://www.linkedin.com/school/singapore-management-university/" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+  
         </div>
-    
-        <div class="container">
-          <div class="copyright">
-            &copy; Copyright <strong><span>Appytizer</span></strong>. All Rights Reserved
-          </div>
-          <div class="credits">
-            <!-- All the links in the footer should remain intact. -->
-            <!-- You can delete the links only if you purchased the pro version. -->
-            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/ -->
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-          </div>
+      </div>
+  
+      <div class="container">
+        <div class="copyright">
+          &copy; Copyright <strong><span>Appytizer</span></strong>. All Rights Reserved
         </div>
-    
-      </footer>
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/ -->
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
+  
+    </footer>
 
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

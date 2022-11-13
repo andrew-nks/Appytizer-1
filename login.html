@@ -22,6 +22,8 @@
     
     <!-- Main CSS File -->
     <link rel="stylesheet" href="Style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -38,7 +40,7 @@
                     <li class="dropdown"><a href="#"><span>Recipes</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                         <ul>
                             <li>
-                                <a href="upload.html">Upload Recipes</a>
+                                <a href="upload.html" id="upload">Upload Recipes</a>
                             </li>
                             <li>
                                 <a href="recipes.html">View Recipes</a>
@@ -56,15 +58,15 @@
                         </ul>
                     </li>
                     <!-- Only after user login then this will be appeared -->
-                    <li class="dropdown"><a href="account.html"><span>Account</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <li class="dropdown"><a href="account.html" id="account"><span>Account</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                         <ul>
                             <li>
-                                <a href="setting.html">Account Setting</a>
+                                <a href="setting.html" id="setting">Account Setting</a>
                             </li>
                             <li>
-                                <a href="savedrecipes.html"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Recipes</a>
+                                <a href="savedrecipes.html" id="savedrecipes"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Recipes</a>
                             <li>
-                                <a href="savedplaces.html"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Places</a>
+                                <a href="savedplaces.html" id="savedplaces"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Places</a>
                             </li>
                         </ul>
                     </li>
@@ -106,15 +108,15 @@
                 </li>
             </ul>
 
-            <!-- The register section -->
+            <!-- The login section -->
             <div class="w3-content" style="max-width:1100px" class="body">
                 <div id="login-box">
                     <div class="left">
                         <h1 class="register">Login</h1>
-                        <input type="text" name="username" placeholder="Username" />
-                        <input type="text" name="email" placeholder="E-mail" />
-                        <input type="password" name="password" placeholder="Password" />
-                        <button type="submit" class="btn btn-danger" name="signup_submit" value="Login"> Login </button>
+                        
+                        <input type="text" id="email" placeholder="E-mail" />
+                        <input type="password" id="password" placeholder="Password" />
+                        <button type="submit" class="btn btn-danger" name="signup_submit" value="Login" id="submit"> Login </button>
                     </div> 
 
                     <div class="right">
@@ -212,4 +214,119 @@
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
+
+    <!-- Disable links if not logged in -->
+    <script>
+      let status = sessionStorage.getItem('status');
+      console.log(status);
+      var uploadLink = document.getElementById('upload');
+      var accountLink = document.getElementById('account');
+      var setting = document.getElementById('setting');
+      var savedplaces = document.getElementById('savedplaces');
+      var savedrecipes = document.getElementById('savedrecipes');
+      if (status == null) {
+        document.addEventListener('click', function (e) {
+            if (e.target.id === uploadLink.id) {
+                e.preventDefault();
+                alert('Please login to upload your recipe');
+            }
+            if (e.target.id === accountLink.id) {
+                e.preventDefault();
+                alert('Please login to view your account');
+            }
+            if (e.target.id === setting.id) {
+                e.preventDefault();
+                alert('Please login to view your settings');
+            }
+            if (e.target.id === savedplaces.id) {
+                e.preventDefault();
+                alert('Please login to view your saved places');
+            }
+            if (e.target.id === savedrecipes.id) {
+                e.preventDefault();
+                alert('Please login to view your saved recipes');
+            }
+        });
+      }
+    </script>
 </body>
+
+<script type="module" >
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
+    import { getStorage, ref, uploadBytes as sRef, uploadBytesResumable, getDownloadURL } 
+    from "https://www.gstatic.com/firebasejs/9.12.1/firebase-storage.js";
+  
+    const firebaseConfig = {
+          // Your configaration code here
+          apiKey: "AIzaSyAFJmlaUL5fNmNKnX37xkB-2erJ_avQvRg",
+        authDomain: "appytizer-d57f2.firebaseapp.com",
+        databaseURL: "https://appytizer-d57f2-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "appytizer-d57f2",
+        storageBucket: "appytizer-d57f2.appspot.com",
+        messagingSenderId: "758981637290",
+        appId: "1:758981637290:web:d4b61652c85549f0854cd3",
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        
+        // Get a reference to the database service
+        import{
+          getFirestore, doc, getDoc, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField
+          }
+        from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+
+
+    // Get a reference to the database service
+    
+                      
+    const db = getFirestore();
+
+    async function login () {
+    // Get all our input fields
+    var email = document.getElementById('email').value
+    
+    var password = document.getElementById('password').value
+    
+    
+    var msg = "";
+  
+    // Validate input fields
+    
+    const newRef = doc(db, "users", email);
+    const docSnap = await getDoc(newRef);
+    
+
+    if (docSnap.exists()) {
+      var pw = docSnap.data().newUser.password;
+      if (pw == password) {
+        
+      sessionStorage.setItem('status','loggedIn');
+      window.location.href = "home.html";
+        
+      } else {
+
+        alert("Incorrect password");
+      }
+      
+    }
+
+    
+    else {
+      alert('Email does not exist')
+      return
+    }
+    
+      
+  
+  }
+  submit.addEventListener("click", login);
+
+
+
+
+</script>
+
+</html> 

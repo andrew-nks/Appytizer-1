@@ -3,34 +3,54 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    
+
     <title>Appytizer</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Amatic+SC:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-    
+
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="assets/vendor/aos/aos.css" rel="stylesheet">
     <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-    
+
     <!-- Main CSS File -->
     <link rel="stylesheet" href="Style.css">
+
+    <!--Vue-->
+    <script src="https://unpkg.com/vue@next"> </script>
+  <style>
+    #map{
+      height:400px;
+      width:100%;
+    }
+
+    .restaurant-header {
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      font-weight: bold;
+    }
+
+    .restaurant-img {
+      width: 200px;
+      height: 264.5px;
+    }
+  </style>
+
 </head>
 
-<body>
+<body >
     <header id="header" class="header fixed-top d-flex align-items-center">
         <div class="container d-flex align-items-center justify-content-between">
             <a href="Home.html" class="logo d-flex align-items-center me-auto me-lg-0">
                 <h1>Appytizer<span>.</span></h1>
             </a>
-            
+
             <!-- Navigation Bar -->
             <nav id="navbar" class="navbar">
                 <ul>
@@ -69,7 +89,7 @@
                         </ul>
                     </li>
                     <li><a href="contact.html">Contact Me</a></li>
-                </ul>     
+                </ul>
             </nav>
 
             <!-- Login/Register  -> this will appear only if the website is not logged in -->
@@ -78,7 +98,7 @@
             <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
         </div>
     </header>
-    
+
     <main id="main">
         <div class="breadcrumbs">
             <div class="container">
@@ -95,49 +115,298 @@
         </div>
 
         <!-- Content will be here -->
-        <section> </section>
+        <section>
+          <div class = "container-fluid ps-5 pe-5 " id = "app">
+            <h1 class="restaurant-header"> Restaurants Near Me <i class="bi bi-shop"></i></h1>
+            <p class="mb-5">Simply let us know what you are craving and let us do the math for you!</p>
+            
+            <div class = "row">
+
+              <div class = "col-lg-8 col-md-12">
+                <div class="input-group mb-3">
+                <input v-model="user_input" type="text" class="form-control d-inline" placeholder="What would you like to eat?" aria-label="Username" aria-describedby="basic-addon1">
+
+                <button v-on:click="getLocation()" type="button" class="btn btn-danger d-inline">Search</button>
+                </div>
+
+                
+              </div>
+              <div class = "col-lg-5 col-md-12 ">
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">Radius (m)</span>
+                  <input type="number" class="form-control d-inline" aria-label="Text input with dropdown button" v-bind:value="radius">
+                </div>
+              </div>
+
+              
+
+            </div>
+            
+            <div id = "map">
+
+            </div>
+
+            
+
+
+            <script type="module" >
+              import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+              import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
+              import { getStorage, ref, uploadBytes as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-storage.js";
+
+              const firebaseConfig = {
+                      // Your configaration code here
+                      apiKey: "AIzaSyAFJmlaUL5fNmNKnX37xkB-2erJ_avQvRg",
+                    authDomain: "appytizer-d57f2.firebaseapp.com",
+                    databaseURL: "https://appytizer-d57f2-default-rtdb.asia-southeast1.firebasedatabase.app",
+                    projectId: "appytizer-d57f2",
+                    storageBucket: "appytizer-d57f2.appspot.com",
+                    messagingSenderId: "758981637290",
+                    appId: "1:758981637290:web:d4b61652c85549f0854cd3",
+                    };
+
+                    // Initialize Firebase
+                    const app = initializeApp(firebaseConfig);
+                    const analytics = getAnalytics(app);
+
+                    // Get a reference to the database service
+                    import{
+                              getFirestore, doc, getDoc, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField
+                          }
+                          from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+
+                    const db = getFirestore();
+                    let output = "";
+                    let saved_place_data ="";
+                    async function sendSavedPlaceData(restaurant){
+                                        console.log("sent to database")
+                                        if (restaurant.price_level===undefined){
+                                          var price = 0
+                                        }
+                                        else{
+                                          var price = restaurant.price_level
+                                        }
+                                        const savedPlacesRef = collection(db, "savedPlaces");
+                                                const newsavedPlace = {
+                                                  address:restaurant.vicinity,
+                                                  name:restaurant.name,
+                                                  photo_url:restaurant.photos[0].getUrl({maxWidth:500, maxHeight:500}),
+                                                  price_level:price,
+                                                  rating:restaurant.rating
+                                                };
+                                                const docRef = await setDoc(doc(savedPlacesRef, restaurant.name),{
+                                                  newsavedPlace
+                                                });
+
+
+                                                alert("Your place has been saved successfully!");
+
+
+                                        }
+
+              
+              
+              
+            const app1 = Vue.createApp({
+                    data(){
+                      return{
+                        error:[],
+                        user_input:"",
+                        price_icon :"$",
+                        saved_place_data:"",
+                        radius:5000
+                      }
+                    },
+                    methods:{
+                      
+                          getLocation() {
+                            if (navigator.geolocation) {
+                              navigator.geolocation.getCurrentPosition(this.showPosition);
+                            } else {
+                              this.error.push ("Geolocation is not supported by this browser.");
+                            }
+                          },
+                          showPosition(position) {
+                            var user_lat =position.coords.latitude;
+                            var user_lng =position.coords.longitude;
+                            this.initMap(user_lat,user_lng);
+                          },
+
+                          changeRadius(rad){
+                            this.radius = rad;
+                          },
+                          
+
+
+
+                          initMap(user_lat,user_lng) {
+                                    
+                                    function createMarker(restaurant){
+
+                                      var coords = restaurant.geometry.location
+                                      var marker = new google.maps.Marker({
+                                      position:coords,
+                                      map:map,
+                                      icon: {
+                                              size: new google.maps.Size(30, 30),
+                                              scaledSize: new google.maps.Size(30, 30),
+                                              url: `data:image/png;base64,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`
+                                          },
+                                      //icon:"https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+                                      icon_background_color:"#FF9E67",
+                                      icon_mask_base_uri:"https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+
+                                    });
+                                      //add event to save place
+                                      marker.addListener("dblclick",function(){sendSavedPlaceData(restaurant)})
+                                      
+                                      //create infoWindow
+                                      var infoWindow = new google.maps.InfoWindow({
+                                        //background image not working...NEED TO FIX
+                                        content:`<div class="card border-dark style="width: 18rem;">
+                                                <img class="card-img-top img-fluid  " src="${restaurant.photos[0].getUrl({maxWidth:500, maxHeight:500})}" alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">${restaurant.name}</h5>
+                                                    <p class="card-text "><div class="progress">
+                                                      <div class="progress-bar" role="progressbar" style="width: ${restaurant.rating*20}%"  aria-valuemin="0" aria-valuemax="100">${restaurant.rating}/5.0</div>
+                                                    </div></p>
+                                                    <p class="card-text">Price Level: ${'$'.repeat(restaurant.price_level)}</p>
+                                                    <p class="card-text">Address: ${restaurant.vicinity}</p>
+                                                    <p class = "card-text">Double click the marker to save the place!</p>
+                                                </div>
+                                              </div>
+                                              `
+
+                                      })
+                                      
+                                      
+                                      //Make infoWindow close upon opening another
+                                      var lastOpenedInfoWindow = ""
+                                      marker.addListener('click',function(){
+
+                                        infoWindow.open(map,marker);
+                                        if (window.lastOpenedInfoWindow) {
+                                              window.lastOpenedInfoWindow.close();
+                                          }
+
+                                        window.lastOpenedInfoWindow = infoWindow;
+                                        savePlace();
+                                        
+                                        
+                                        
+
+                                      });
+                                      
+                                      //create object to send to database method 1
+
+                                      function savePlace(){
+
+
+                                          window.saved_place_data = {"photo_url":restaurant.photos[0].getUrl({maxWidth:500, maxHeight:500}),
+                                                                  "name":restaurant.name,
+                                                                  "rating":restaurant.rating,
+                                                                  "price_level":restaurant.price_level,
+                                                                  "address":restaurant.vicinity,};
+                                          //console.log(window.saved_place_data)
+
+                                      }
+                                      
+
+
+                                    };
+
+                                    //map options
+                                    var options ={
+                                      zoom:12,
+                                      center:{lat:user_lat,lng:user_lng},
+                                    }
+                                    //new map
+                                    var map = new
+                                    google.maps.Map(document.getElementById("map"),options);
+
+                                    //add marker
+
+                                    var marker = new google.maps.Marker({
+                                      position:{lat:user_lat,lng:user_lng},
+                                      map:map,
+
+                                    });
+
+                                    const currLocation = new google.maps.LatLng(parseFloat(user_lat),parseFloat(user_lng))
+
+                                    var request = {
+                                                    location:currLocation,
+                                                    type:["restaurant","cafe","meal_takeaway","bakery","establishment"],
+                                                    radius: this.radius,
+                                                    keyword: this.user_input,
+
+                                                  };
+                                    var service = new google.maps.places.PlacesService(map);
+
+                                    service.nearbySearch(request, (results, status) => {
+                                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                                      for (let i = 0; i < results.length; i++) {
+                                        //console.log(results[i])
+                                        createMarker(results[i],map);
+                                      }
+
+                                    }
+                                    });
+
+
+                          }
+                    }})
+                    const vm = app1.mount('#app')
+
+
+          </script>
+          </div>
+        </section>
 
     </main>
 
     <!-- Footer -->
     <footer id="footer" class="footer">
 
-        <div class="container">
-          <div class="row gy-3">
-            <div class="col-lg-3 col-md-6 d-flex">
-              <i class="bi bi-geo-alt icon"></i>
-              <div>
-                <h4>Address</h4>
-                <p>
-                  A108 Adam Street <br>
-                  New York, NY 535022 - US<br>
-                </p>
-              </div>
-    
+      <div class="container">
+        <div class="row gy-3">
+          <div class="col-lg-3 col-md-6 d-flex">
+            <i class="bi bi-geo-alt icon"></i>
+            <div>
+              <h4>Address</h4>
+              <p>
+                80 Stamford Rd<br>
+                Singapore, S178902 <br>
+              </p>
             </div>
-    
-            <div class="col-lg-3 col-md-6 footer-links d-flex">
-              <i class="bi bi-telephone icon"></i>
-              <div>
-                <h4>Reservations</h4>
-                <p>
-                  <strong>Phone:</strong> +1 5589 55488 55<br>
-                  <strong>Email:</strong> info@example.com<br>
-                </p>
-              </div>
+  
+          </div>
+  
+          <div class="col-lg-3 col-md-6 footer-links d-flex">
+            <i class="bi bi-telephone icon"></i>
+            <div>
+              <h4>Reservations</h4>
+              <p>
+                <strong>Phone:</strong> +65 68087960
+                <br>
+                <strong>Email:</strong> contact@smu.edu.com.sg
+                <br>
+              </p>
             </div>
-    
-            <div class="col-lg-3 col-md-6 footer-links d-flex">
-              <i class="bi bi-clock icon"></i>
-              <div>
-                <h4>Opening Hours</h4>
-                <p>
-                  <strong>Mon-Sat: 11AM</strong> - 23PM<br>
-                  Sunday: Closed
-                </p>
-              </div>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 footer-links d-flex">
+            <i class="bi bi-clock icon"></i>
+            <div>
+              <h4>Opening Hours</h4>
+              <p>
+                <strong>Monday to Friday : 8:30AM</strong> to 5:45PM
+                <br>
+                Saturday & Sunday: Closed
+              </p>
             </div>
-    
+          </div>
+
             <div class="col-lg-3 col-md-6 footer-links">
               <h4>Follow Us</h4>
               <div class="social-links d-flex">
@@ -147,10 +416,10 @@
                 <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
               </div>
             </div>
-    
+
           </div>
         </div>
-    
+
         <div class="container">
           <div class="copyright">
             &copy; Copyright <strong><span>Appytizer</span></strong>. All Rights Reserved
@@ -163,7 +432,7 @@
             Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
           </div>
         </div>
-    
+
       </footer>
 
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -180,4 +449,8 @@
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
+    <!--Places API-->
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtfDll0G6zpzTvOsCT3msCl9gY1iTr8_4&libraries=places&callback=initMap">
+    </script>
 </body>

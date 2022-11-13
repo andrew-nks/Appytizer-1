@@ -22,6 +22,15 @@
     
     <!-- Main CSS File -->
     <link rel="stylesheet" href="Style.css">
+    <!--Vue-->
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <style>
+      .saved-header {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-weight: bold;
+      }
+    </style>
 </head>
 
 <body>
@@ -62,9 +71,9 @@
                                 <a href="setting.html">Account Setting</a>
                             </li>
                             <li>
-                                <a href="savedrecipes.html"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Recipes</a>
+                                <a href="savedrecipes.html">&#10084; Saved Recipes</a>
                             <li>
-                                <a href="savedplaces.html"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Places</a>
+                                <a href="savedplaces.html">&#10084; Saved Places</a>
                             </li>
                         </ul>
                     </li>
@@ -95,7 +104,81 @@
         </div>
 
         <!-- Content will be here -->
-        <section> </section>
+        <section class="section-bg"> 
+          
+          <div class="saved-header mb-5 " style = "text-align:center;">
+            <h1 style="font-size: 50px; font-weight: bolder;">My Saved Places</h1>
+            <p>Places to visit.</p>
+          </div>
+          
+          <div class = "container-fluid ps-5 pe-5" id = "app1">
+            
+            <div class = "row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5" id="savedCards">
+              
+            </div>
+          </div>
+          
+          
+            <script type="module" >
+          import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+          import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
+          import { getStorage, ref, uploadBytes as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-storage.js";
+          
+          const firebaseConfig = {
+                  // Your configaration code here
+                  apiKey: "AIzaSyAFJmlaUL5fNmNKnX37xkB-2erJ_avQvRg",
+                authDomain: "appytizer-d57f2.firebaseapp.com",
+                databaseURL: "https://appytizer-d57f2-default-rtdb.asia-southeast1.firebasedatabase.app",
+                projectId: "appytizer-d57f2",
+                storageBucket: "appytizer-d57f2.appspot.com",
+                messagingSenderId: "758981637290",
+                appId: "1:758981637290:web:d4b61652c85549f0854cd3",
+                };
+
+                // Initialize Firebase
+                const app = initializeApp(firebaseConfig);
+                const analytics = getAnalytics(app);
+                
+                // Get a reference to the database service
+                import{
+    getFirestore, doc, getDoc, getDocs, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField
+    }
+    from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+                
+                const db = getFirestore();
+              
+              // Output the saved places
+              const querySnapshot = await getDocs(collection(db, "savedPlaces"));
+              querySnapshot.forEach((doc) => {
+                
+                var savedPlaceName = doc.id;
+                var savedPlaceInfo = doc.data()
+                console.log(savedPlaceName);
+                console.log(savedPlaceInfo);
+                
+
+                document.getElementById("savedCards").innerHTML += `<div data-aos="zoom-in" data-aos-delay="200" class="col">
+                                                                      <div class="card h-100">
+                                                                        <img src="${savedPlaceInfo.newsavedPlace.photo_url}" class="card-img-top" alt="...">
+                                                                        <div class="card-body">
+                                                                          <h5 class="card-title">${savedPlaceInfo.newsavedPlace.name}</h5>
+                                                                          <p class="card-text">
+                                                                            <p>Ratings: </p>
+                                                                            <div class="progress">
+                                                                              <div class="progress-bar bg-success" role="progressbar" style="width:${savedPlaceInfo.newsavedPlace.rating *20 }%"  aria-valuemin="0" aria-valuemax="100">${savedPlaceInfo.newsavedPlace.rating}/5.0</div>
+                                                                            </div>
+                                                                          </p>
+                                                                          <p class="card-text"><i class="bi bi-tags-fill"></i> Price Level: ${'$'.repeat(savedPlaceInfo.newsavedPlace.price_level)}</p>
+                                                                          <p class="card-text"><i class="bi bi-house-fill"></i> Address: ${savedPlaceInfo.newsavedPlace.address}</p>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>`
+              });
+
+              
+              
+          </script>
+        </section>
 
     </main>
 

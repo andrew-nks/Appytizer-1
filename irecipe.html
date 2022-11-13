@@ -21,45 +21,7 @@
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
     <style>
-      .recipe-header {
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        font-weight: bold;
-      }
-      
-      .card:hover {
-        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-      }
 
-      img {
-        border-radius: 5px 5px 0 0;
-      }
-
-      .card button {
-        border: none;
-        outline: 0;
-        padding: 12px;
-        color: white;
-        background-color: #000;
-        text-align: center;
-        cursor: pointer;
-        width: 100%;
-        font-size: 18px;
-      }
-
-      .price {
-        color: grey;
-        font-size: 22px;
-      }
-
-      .card button:hover {
-        opacity: 0.7;
-      }
-
-      .bg-pic {
-        width: 100px;
-        height: 100px;
-        opacity: 50%;
-      }
     </style>
     
     <!-- Main CSS File -->
@@ -99,17 +61,16 @@
                     </li>
                     <!-- Only after user login then this will be appeared -->
                     <li class="dropdown"><a href="account.html"><span>Account</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                      <ul>
-                        <li>
-                          <a href="setting.html">Account Setting</a>
-                        </li>
-                        <li>
-                          <a href="savedrecipes.html">&#10084; Saved Recipes</a>
-                        </li>
-                        <li>
-                          <a href="savedplaces.html">&#10084; Saved Places</a>
-                        </li>
-                      </ul>
+                        <ul>
+                            <li>
+                                <a href="setting.html">Account Setting</a>
+                            </li>
+                            <li>
+                                <a href="savedrecipes.html">&#10084; Saved Recipes</a>
+                            <li>
+                                <a href="savedplaces.html">&#10084; Saved Places</a>
+                            </li>
+                        </ul>
                     </li>
                     <li><a href="contact.html">Contact Me</a></li>
                 </ul>     
@@ -138,48 +99,40 @@
         </div>
 
         <!-- Content will be here -->
+        <section >
+            <div class="receipe-post-area section-padding-80">        
+                <!-- Receipe image -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Receipe Content Area -->
+                <div class="receipe-content-area">
+                    <div class="container">
+                        <div class="row" id="recipeInfo"></div>
 
-        <section id="recipe-album" class="d-flex align-items-center section-bg "> 
-          
-          <div class="container ps-5 pe-5">
+                        <div class="row">
+                            <div id="ingredients">
+                                <h4>Ingredients</h4>
+                            </div>
+                        </div>
 
-            <h1 class="recipe-header ms-3">All Recipes</h1>
-            <p class="recipe-sub mb-5 ms-3"><i>All your favourtie food in one place.</i></p>
-            
-            <!-- Album Card design with button of like, view, comment -->
-            <div id="recipe">
-              <div class="row row-cols-1 row-cols-md-3 g-4" id="row">
-
-              </div>
+                        <div class="row">
+                            <div class= "method" class="col-12 col-lg-8" id="recipemethod">
+                                <h2> Methods: </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="page-section mt-5 d-flex justify-content-center">
-              <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-
-          </div>
-
         </section>
 
     </main>
 
-  <!-- Footer -->
+      <!-- Footer -->
   <footer id="footer" class="footer">
 
     <div class="container">
@@ -254,6 +207,15 @@
     <div id="preloader"></div>
 
     <script type="module" >
+//			var myData = localStorage['objectToPass'];
+//			console.log(myData)
+//	   		localStorage.removeItem( 'objectToPass' ); // Clear the localStorage
+//	   		var rn = myData[0];
+		var data = localStorage.getItem("objectToPass");
+		localStorage.clear(); //clean the localstorage
+		var recipeName = JSON.parse(data).key1;
+		
+		
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
       import { getStorage, ref, uploadBytes as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-storage.js";
@@ -282,39 +244,61 @@
           // Output the recipes
           const querySnapshot = await getDocs(collection(db, "recipes"));
           querySnapshot.forEach((doc) => {
-            var recipeName = doc.id;
+            var rn = doc.id;
             var recipeInfo = doc.data();
+            var desc = recipeInfo.newRecipe.desc;
             var calories = recipeInfo.newRecipe.calories;
             var fats = recipeInfo.newRecipe.fats;
-            var desc = recipeInfo.newRecipe.desc;
+            var protein = recipeInfo.newRecipe.protein;
+            var cooktime = recipeInfo.newRecipe.cook;
+            var preptime = recipeInfo.newRecipe.prep;
+            var restime = recipeInfo.newRecipe.rest;
+            var Ttime = recipeInfo.newRecipe.total;
+            var serving = recipeInfo.newRecipe.serving;
+            var ingredients = recipeInfo.newRecipe.ingredients;
+            var methods = recipeInfo.newRecipe.steps;
+			  
 
-            let result = desc.substring(0,50);
+            if(rn == recipeName){
+                document.getElementById("recipeInfo").innerHTML += `<div class="col-12 col-md-8">
+                                                                        <img src="./assets/img/pasta.png" alt="Avatar" style="width:100%">
+                                                                        <div class="receipe-headline my-5">
+                                                                            <h2>${rn}</h2>
+                                                                            <div class="row">
+                                                                                <div class="col-6 receipe-duration">
+                                                                                    <h6>Preparation Time: ${preptime} mins</h6>
+                                                                                    <h6>Cook Time: ${cooktime} mins</h6>
+                                                                                    <h6>Rest Time: ${restime} mins</h6>
+                                                                                    <h6>Total Time: ${Ttime} mins</h6>
+                                                                                    <h6>Yields: ${serving} Servings</h6>
+                                                                                </div>
+                                                                                <div class="col-6 receipe-duration">
+                                                                                    <h6>Calories: ${calories} </h6>
+                                                                                    <h6>Fats: ${fats} </h6>
+                                                                                    <h6>Protein: ${protein} </h6>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>`;
 
-            document.getElementById("row").innerHTML += `<div class="col-lg-4">
-                                                                <div class="card">
-                                                                  <img src="./assets/img/pasta.png" alt="Avatar" style="width:100%">
-                                                                  <div class="container">
-                                                                    <h4><b>${recipeName}</b></h4> 
-                                                                    <p class="price" style="color: grey;font-size: 22px"> Calories: ${calories}</p>
-                                                                    <p>${result}...</p> 
-                                                                    <a href="#" class="btn btn-primary" onclick="selected('${recipeName}')">View Recipe</a>
-                                                                    <br>
-                                                                    <p><button> &#10084; Saved </button></p>
-                                                                  </div>
-                                                                </div>
-                                                            </div>`;
-          });
+                for(var j of ingredients){
+                    if (j != ""){
+                        document.getElementById("ingredients").innerHTML +=`<div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                                                <label class="custom-control-label" for="customCheck1">${j}</label>
+                                                                            </div>
+                                                                            <br>`
+                    }
+                };
 
-
-    </script>
-	<script>
-		function selected(recipeName){
-              var data = {'key1': recipeName};
-              localStorage.setItem('objectToPass', JSON.stringify(data));
-              window.location.replace("irecipe.html")
+                for(var i of methods){
+                    document.getElementById("recipemethod").innerHTML += `<div class="single-preparation-step d-flex">
+                                                                                <p>${i}</p>
+                                                                            </div>`;
+                }
             }
-	</script>
-
+            });
+    </script>
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

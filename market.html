@@ -22,11 +22,27 @@
     
     <!-- Main CSS File -->
     <link rel="stylesheet" href="Style.css">
+    <style>
+    #map{
+      height:400px;
+      width:100%;
+    }
+
+    .market-header {
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      font-weight: bold;
+    }
+
+    .market-img {
+      width: 106px;
+      height: 60px;
+    }
+    </style>
 </head>
 
 <body>
     <header id="header" class="header fixed-top d-flex align-items-center">
-        <div class="container d-flex align-items-center justify-content-between">
+        <div class="container-fluid ps-5 pe-5 d-flex align-items-center justify-content-between ">
             <a href="Home.html" class="logo d-flex align-items-center me-auto me-lg-0">
                 <h1>Appytizer<span>.</span></h1>
             </a>
@@ -46,27 +62,27 @@
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#"><span>Places to go to</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                        <ul>
-                            <li>
-                                <a href="market.html">Market to go</a>
-                            </li>
-                            <li>
-                                <a href="restaurant.html">Restaurant to go</a>
-                            </li>
-                        </ul>
+                      <ul>
+                        <li>
+                            <a href="market.html">Market to go</a>
+                        </li>
+                        <li>
+                            <a href="restaurant.html">Restaurant to go</a>
+                        </li>
+                    </ul>
                     </li>
                     <!-- Only after user login then this will be appeared -->
                     <li class="dropdown"><a href="account.html"><span>Account</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                        <ul>
-                            <li>
-                                <a href="setting.html">Account Setting</a>
-                            </li>
-                            <li>
-                                <a href="savedrecipes.html"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Recipes</a>
-                            <li>
-                                <a href="savedplaces.html"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Places</a>
-                            </li>
-                        </ul>
+                      <ul>
+                        <li>
+                            <a href="setting.html">Account Setting</a>
+                        </li>
+                        <li>
+                            <a href="savedrecipes.html">&#10084; Saved Recipes</a>
+                        <li>
+                            <a href="savedplaces.html">&#10084; Saved Places</a>
+                        </li>
+                    </ul>
                     </li>
                     <li><a href="contact.html">Contact Me</a></li>
                 </ul>     
@@ -95,76 +111,239 @@
         </div>
 
         <!-- Content will be here -->
-        <section> </section>
+        <section>
+          
+          <div class = "container-fluid ps-5 pe-5">
+            
+            <h1 class="market-header mb-3">Markets Near Me <img class="market-img" src="./assets/img/Vege.png"></h1>
+            <p> Click on the button below to search for supermarkets/Wet markets near you! </p>
+            
+            <div id = "map"></div>
+            <button onclick="getLocation()"type="button" class="btn btn-danger my-1 mt-5">Nearby Markets</button>
+            
+          </div>
+          <script>
+            var x = document.getElementById("error");
+            function getLocation() {
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+              } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+              }
+            }
+            function showPosition(position) {
+              var user_lat =position.coords.latitude;
+              var user_lng =position.coords.longitude;
+              initMap(user_lat,user_lng);
+            }
+            function getDirection(coords){
+              
+            }
+            
+            function initMap(user_lat,user_lng) {
+                      function createMarker(shop){
+                        console.log(shop,"HERE")
+                        var marker = new google.maps.Marker({
+                        position:shop.geometry.location,
+                        map:map,
+                        icon: {
+                                              size: new google.maps.Size(30, 30),
+                                              scaledSize: new google.maps.Size(30, 30),
+                                              url: `data:image/png;base64,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` 
+                                          },
+                      });
+                      
+                      var infoWindow = new google.maps.InfoWindow({
+                                        //background image not working...NEED TO FIX
+                                        content:`<div class="card border-dark style="background-image:url('https://thumbs.dreamstime.com/z/cartoon-cute-food-kitchenware-white-background-seamless-pattern-linear-illustration-zentangle-book-breakfast-time-128855757.jpg'); width: 18rem;"> 
+                                                <img class="card-img-top img-fluid  " src="${shop.photos[0].getUrl({maxWidth:500, maxHeight:500})}" alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">${shop.name}</h5>
+                                                    <p class="card-text "><div class="progress">
+                                                      <div class="progress-bar" role="progressbar" style="width: ${shop.rating*20}%"  aria-valuemin="0" aria-valuemax="100">${shop.rating}/5.0</div>
+                                                    </div></p>
+                                                    <p class="card-text">Price Level: ${'$'.repeat(shop.price_level)}</p>
+                                                    <p class="card-text">Address: ${shop.vicinity}</p>
+                                                    <div id = "saveBtn">
+                                                      <a href="https://www.google.com/maps/dir/?api=1&origin=${currLocation}&destination=${shop.geometry.location}" id = "saveBtn3" "class="btn btn-primary">Get Directions</a>
+                                                    </div>
+                                                </div>
+                                              </div>
+                                              `
+
+                                      })
+                                      
+                                      
+                                      //Make infoWindow close upon opening another
+                                      var lastOpenedInfoWindow = ""
+                                      marker.addListener('click',function(){
+                                        
+                                        infoWindow.open(map,marker);
+                                        if (window.lastOpenedInfoWindow) {
+                                              window.lastOpenedInfoWindow.close();
+                                          }
+                              
+                                        window.lastOpenedInfoWindow = infoWindow;
+                                        //savePlace();
+                                        
+                                      });
+                                    }
+                      //map options
+                      var options ={
+                        zoom:12,
+                        center:{lat:user_lat,lng:user_lng},
+                      }
+                      //new map
+                      var map = new
+                      google.maps.Map(document.getElementById("map"),options);
+
+                      //add marker
+
+                      var marker = new google.maps.Marker({
+                        position:{lat:user_lat,lng:user_lng},
+                        map:map
+                      });
+                      
+                      const currLocation = new google.maps.LatLng(parseFloat(user_lat),parseFloat(user_lng))
+                      //console.log(currLocation)
+
+                      //Search 1 for non major markets
+                      var request = { 
+                                      location:currLocation,
+                                      type:["supermarket","store"],
+                                      radius: 5000,
+                                      keyword: "market",
+                                      
+                                    };
+                      var service = new google.maps.places.PlacesService(map);
+                      
+                      service.nearbySearch(request, (results, status) => {
+                      if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        for (let i = 0; i < results.length; i++) {
+                          console.log(results[i],"full")
+                          createMarker(results[i],map);
+                        }
+                        
+                      }
+                      });
+                      //Search 2 for wet markets
+                      var request = {
+                                      location:currLocation,
+                                      type:["supermarket"],
+                                      radius: 5000,
+                                      keyword: "wet market",
+                                      
+                                    };
+                      var service = new google.maps.places.PlacesService(map);
+                      
+                      service.nearbySearch(request, (results, status) => {
+                      if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        for (let i = 0; i < results.length; i++) {
+                          console.log(results[i])
+                          createMarker(results[i],map);
+                        }
+                        
+                      }
+                      });
+                      //Search 3 for fairprice
+                      var request = {
+                                      location:currLocation,
+                                      type:["supermarket"],
+                                      radius: 5000,
+                                      keyword: "fairprice",
+                                      
+                                    };
+                      var service = new google.maps.places.PlacesService(map);
+                      
+                      service.nearbySearch(request, (results, status) => {
+                      if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        for (let i = 0; i < results.length; i++) {
+                          console.log(results[i])
+                          createMarker(results[i],map);
+                        }
+                        
+                      }
+                      });
+
+                      
+                    }
+            
+
+          </script>
+          </div>
+        </section>
 
     </main>
 
-    <!-- Footer -->
-    <footer id="footer" class="footer">
+     <!-- Footer -->
+     <footer id="footer" class="footer">
 
-        <div class="container">
-          <div class="row gy-3">
-            <div class="col-lg-3 col-md-6 d-flex">
-              <i class="bi bi-geo-alt icon"></i>
-              <div>
-                <h4>Address</h4>
-                <p>
-                  A108 Adam Street <br>
-                  New York, NY 535022 - US<br>
-                </p>
-              </div>
-    
+      <div class="container">
+        <div class="row gy-3">
+          <div class="col-lg-3 col-md-6 d-flex">
+            <i class="bi bi-geo-alt icon"></i>
+            <div>
+              <h4>Address</h4>
+              <p>
+                80 Stamford Rd<br>
+                Singapore, S178902 <br>
+              </p>
             </div>
-    
-            <div class="col-lg-3 col-md-6 footer-links d-flex">
-              <i class="bi bi-telephone icon"></i>
-              <div>
-                <h4>Reservations</h4>
-                <p>
-                  <strong>Phone:</strong> +1 5589 55488 55<br>
-                  <strong>Email:</strong> info@example.com<br>
-                </p>
-              </div>
-            </div>
-    
-            <div class="col-lg-3 col-md-6 footer-links d-flex">
-              <i class="bi bi-clock icon"></i>
-              <div>
-                <h4>Opening Hours</h4>
-                <p>
-                  <strong>Mon-Sat: 11AM</strong> - 23PM<br>
-                  Sunday: Closed
-                </p>
-              </div>
-            </div>
-    
-            <div class="col-lg-3 col-md-6 footer-links">
-              <h4>Follow Us</h4>
-              <div class="social-links d-flex">
-                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-              </div>
-            </div>
-    
+  
           </div>
+  
+          <div class="col-lg-3 col-md-6 footer-links d-flex">
+            <i class="bi bi-telephone icon"></i>
+            <div>
+              <h4>Reservations</h4>
+              <p>
+                <strong>Phone:</strong> +65 68087960
+                <br>
+                <strong>Email:</strong> contact@smu.edu.com.sg
+                <br>
+              </p>
+            </div>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 footer-links d-flex">
+            <i class="bi bi-clock icon"></i>
+            <div>
+              <h4>Opening Hours</h4>
+              <p>
+                <strong>Monday to Friday : 8:30AM</strong> to 5:45PM
+                <br>
+                Saturday & Sunday: Closed
+              </p>
+            </div>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Follow Us</h4>
+            <div class="social-links d-flex">
+              <a href="https://twitter.com/sgSMU" class="twitter"><i class="bi bi-twitter"></i></a>
+              <a href="https://www.facebook.com/sgsmu" class="facebook"><i class="bi bi-facebook"></i></a>
+              <a href="https://www.instagram.com/sgsmuscis/?hl=en" class="instagram"><i class="bi bi-instagram"></i></a>
+              <a href="https://www.linkedin.com/school/singapore-management-university/" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+  
         </div>
-    
-        <div class="container">
-          <div class="copyright">
-            &copy; Copyright <strong><span>Appytizer</span></strong>. All Rights Reserved
-          </div>
-          <div class="credits">
-            <!-- All the links in the footer should remain intact. -->
-            <!-- You can delete the links only if you purchased the pro version. -->
-            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/ -->
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-          </div>
+      </div>
+  
+      <div class="container">
+        <div class="copyright">
+          &copy; Copyright <strong><span>Appytizer</span></strong>. All Rights Reserved
         </div>
-    
-      </footer>
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/ -->
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
+  
+    </footer>
 
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -180,4 +359,8 @@
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
+    <!--Places API-->
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtfDll0G6zpzTvOsCT3msCl9gY1iTr8_4&libraries=places&callback=initMap">
+    </script>
 </body>

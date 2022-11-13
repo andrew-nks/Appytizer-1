@@ -38,7 +38,7 @@
                     <li class="dropdown"><a href="#"><span>Recipes</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                         <ul>
                             <li>
-                                <a href="upload.html">Upload Recipes</a>
+                                <a href="upload.html" id="upload">Upload Recipes</a>
                             </li>
                             <li>
                                 <a href="recipes.html">View Recipes</a>
@@ -56,15 +56,15 @@
                         </ul>
                     </li>
                     <!-- Only after user login then this will be appeared -->
-                    <li class="dropdown"><a href="account.html"><span>Account</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <li class="dropdown"><a href="account.html" id="account"><span>Account</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                         <ul>
                             <li>
-                                <a href="setting.html">Account Setting</a>
+                                <a href="setting.html" id="setting">Account Setting</a>
                             </li>
                             <li>
-                                <a href="savedrecipes.html"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Recipes</a>
+                                <a href="savedrecipes.html" id="savedrecipes"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Recipes</a>
                             <li>
-                                <a href="savedplaces.html"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Places</a>
+                                <a href="savedplaces.html" id="savedplaces"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Places</a>
                             </li>
                         </ul>
                     </li>
@@ -111,11 +111,12 @@
                 <div id="login-box">
                     <div class="left">
                         <h1 class="register">Register</h1>
-                        <input type="text" name="username" placeholder="Username" />
-                        <input type="text" name="email" placeholder="E-mail" />
-                        <input type="password" name="password" placeholder="Password" />
-                        <input type="password" name="password2" placeholder="Retype password" />
-                        <button type="submit" class="btn btn-danger" name="signup_submit" value="Login"> Register </button>
+                        <input type="text" id="username" placeholder="Username" />
+                        <input type="text" id="email" placeholder="E-mail" />
+                        <input type="password" id="password" placeholder="Password" />
+                        <input type="password" id="password2" placeholder="Retype password" />
+                        <button type="button" class="btn btn-danger" name="signup_submit" value="Login" id="submit"> Register </button>
+                        
                     </div> 
 
                     <div class="right">
@@ -129,7 +130,7 @@
                 </div>
             </div>
         </section>
-
+ 
     </main>
 
     <!-- Footer -->
@@ -213,4 +214,173 @@
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
+    
+    <!-- Disable links if not logged in -->
+    <script>
+      let status = sessionStorage.getItem('status');
+      console.log(status);
+      var uploadLink = document.getElementById('upload');
+      var accountLink = document.getElementById('account');
+      var setting = document.getElementById('setting');
+      var savedplaces = document.getElementById('savedplaces');
+      var savedrecipes = document.getElementById('savedrecipes');
+      if (status == null) {
+        document.addEventListener('click', function (e) {
+            if (e.target.id === uploadLink.id) {
+                e.preventDefault();
+                alert('Please login to upload your recipe');
+            }
+            if (e.target.id === accountLink.id) {
+                e.preventDefault();
+                alert('Please login to view your account');
+            }
+            if (e.target.id === setting.id) {
+                e.preventDefault();
+                alert('Please login to view your settings');
+            }
+            if (e.target.id === savedplaces.id) {
+                e.preventDefault();
+                alert('Please login to view your saved places');
+            }
+            if (e.target.id === savedrecipes.id) {
+                e.preventDefault();
+                alert('Please login to view your saved recipes');
+            }
+        });
+      }
+    </script>
 </body>
+
+<script type="module" >
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
+  import { getStorage, ref, uploadBytes as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-storage.js";
+  
+  const firebaseConfig = {
+          // Your configaration code here
+          apiKey: "AIzaSyAFJmlaUL5fNmNKnX37xkB-2erJ_avQvRg",
+        authDomain: "appytizer-d57f2.firebaseapp.com",
+        databaseURL: "https://appytizer-d57f2-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "appytizer-d57f2",
+        storageBucket: "appytizer-d57f2.appspot.com",
+        messagingSenderId: "758981637290",
+        appId: "1:758981637290:web:d4b61652c85549f0854cd3",
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        
+        // Get a reference to the database service
+        import{
+getFirestore, doc, getDoc, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField
+}
+from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+
+
+    // Get a reference to the database service
+    
+                      
+    const db = getFirestore();
+
+  
+    function validate_email(email) {
+    var expression = /^[^@]+@\w+(\.\w+)+\w$/
+    if (expression.test(email) == true) {
+      // Email is good
+      return true
+    } else {
+      // Email is not good
+      return false
+    }
+  }
+  
+  function validate_password(password) {
+    // Firebase only accepts lengths greater than 6
+    if (password < 6) {
+      return false
+    } else {
+      return true
+    }
+  }
+  
+  function validate_field(field) {
+    if (field == null) {
+      return false
+    }
+  
+    if (field.length <= 0) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+
+  // Set up our register function
+  async function register () {
+    // Get all our input fields
+    var email = document.getElementById('email').value
+    
+    var password = document.getElementById('password').value
+    var username = document.getElementById('username').value
+    var retype_password = document.getElementById('password2').value
+    var msg = "";
+  
+    // Validate input fields
+    if (validate_email(email) == false || validate_password(password) == false) {
+      msg += 'Email or Password is invalid\n';
+      return
+      // Don't continue running the code
+    }
+    if (validate_field(username) == false || validate_field(retype_password) == false) {
+      msg += 'One or More Extra Fields is invalid\n';
+      return
+    }
+    if (password.length < 6) {
+      msg += 'Password must be at least 6 characters\n';
+      return
+    }
+    if (password != retype_password) {
+      msg += 'Passwords do not match\n';
+      return
+    }
+    
+    if (msg != "") {
+      alert(msg);
+      return false;
+    } 
+
+    const newRef = doc(db, "users", email);
+    const docSnap = await getDoc(newRef);
+    
+
+    if (docSnap.exists()) {
+      alert('Email already exists')
+      return
+    } 
+    else {
+      
+    
+      const userRef = collection(db, "users");
+                      const newUser = {
+                        username: username,
+                        email: email,
+                        password: password,
+                        
+                      };
+                      const docRef = await setDoc(doc(userRef, email),{
+                        newUser
+                      })
+
+      alert('Account Created, proceed to Log In');
+    }
+  
+  }
+  submit.addEventListener("click", register);
+  
+</script>
+
+
+
+</html>

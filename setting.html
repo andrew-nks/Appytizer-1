@@ -22,6 +22,37 @@
     
     <!-- Main CSS File -->
     <link rel="stylesheet" href="Style.css">
+
+    <style>
+      .profile-header {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-weight: bold;
+      }
+
+      .profile-div {
+        position: absolute;
+        top: 200px;
+        right: 30px;
+      }
+
+      .profile-bg {
+        width: 1425px;
+        height: 950px;
+        opacity: 50%;
+      }
+
+      #profile {
+        padding-top: 0%;
+        padding-bottom: 0%;
+      }
+
+      .profile-div {
+        background-color: rgb(240, 236, 219);
+        padding: 50px;
+        justify-content: flex-start;
+       
+      }
+    </style>
 </head>
 
 <body>
@@ -46,27 +77,28 @@
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#"><span>Places to go to</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                        <ul>
-                            <li>
-                                <a href="market.html">Market to go</a>
-                            </li>
-                            <li>
-                                <a href="restaurant.html">Restaurant to go</a>
-                            </li>
-                        </ul>
+                      <ul>
+                        <li>
+                            <a href="market.html">Market to go</a>
+                        </li>
+                        <li>
+                            <a href="restaurant.html">Restaurant to go</a>
+                        </li>
+                    </ul>
                     </li>
                     <!-- Only after user login then this will be appeared -->
                     <li class="dropdown"><a href="account.html"><span>Account</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                        <ul>
-                            <li>
-                                <a href="setting.html">Account Setting</a>
-                            </li>
-                            <li>
-                                <a href="savedrecipes.html"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Recipes</a>
-                            <li>
-                                <a href="savedplaces.html"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Places</a>
-                            </li>
-                        </ul>
+                      <ul>
+                        <li>
+                          <a href="setting.html">Account Setting</a>
+                        </li>
+                        <li>
+                          <a href="savedrecipes.html">&#10084; Saved Recipes</a>
+                        </li>
+                        <li>
+                          <a href="savedplaces.html">&#10084; Saved Places</a>
+                        </li>
+                      </ul>
                     </li>
                     <li><a href="contact.html">Contact Me</a></li>
                 </ul>     
@@ -95,76 +127,144 @@
         </div>
 
         <!-- Content will be here -->
-        <section> </section>
+        
+        <div id="profile d-flex align-items-center section-bg justify-content-center mx-auto"> 
+          <img class="profile-bg position-relative" src="./assets/img/slide_2.jpg">
+          <div class="profile-div container">
+            
+            <h1 class="profile-header pb-4"> My Profile</h1>
+
+            <div class="profilePicture">
+              <img class="profilePic" src="./assets/img/blank_profile.jpeg">
+              <div class="mt-4"><button type="button" class="btn btn-light btn-sm">Change Image</button></div>
+            </div>
+          
+          <form>
+            <div class="row mb-3 mt-5">
+              <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
+              <div class="col-sm-10">
+                <input type="username" class="form-control w-25" id="inputUsername">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+              <div class="col-sm-10">
+                <input type="name" class="form-control w-25" id="inputName">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control w-25" id="inputEmail3">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+              <div class="col-sm-10">
+                <input type="password" class="form-control w-20" id="inputPassword3">
+              </div>
+            </div>
+            <fieldset class="row mb-3">
+              <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
+              <div class="col-sm-10">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                  <label class="form-check-label" for="gridRadios1">
+                    Male
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                  <label class="form-check-label" for="gridRadios2">
+                    Female
+                  </label>
+                </div>
+                <div class="form-check disabled">
+                  <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3">
+                  <label class="form-check-label" for="gridRadios3">
+                    Other
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+            
+            <button type="submit" class="btn btn-secondary">Save</button>
+          </form>
+        
+        </div>
+      </div>
 
     </main>
 
-    <!-- Footer -->
-    <footer id="footer" class="footer">
+   <!-- Footer -->
+   <footer id="footer" class="footer">
 
-        <div class="container">
-          <div class="row gy-3">
-            <div class="col-lg-3 col-md-6 d-flex">
-              <i class="bi bi-geo-alt icon"></i>
-              <div>
-                <h4>Address</h4>
-                <p>
-                  A108 Adam Street <br>
-                  New York, NY 535022 - US<br>
-                </p>
-              </div>
-    
-            </div>
-    
-            <div class="col-lg-3 col-md-6 footer-links d-flex">
-              <i class="bi bi-telephone icon"></i>
-              <div>
-                <h4>Reservations</h4>
-                <p>
-                  <strong>Phone:</strong> +1 5589 55488 55<br>
-                  <strong>Email:</strong> info@example.com<br>
-                </p>
-              </div>
-            </div>
-    
-            <div class="col-lg-3 col-md-6 footer-links d-flex">
-              <i class="bi bi-clock icon"></i>
-              <div>
-                <h4>Opening Hours</h4>
-                <p>
-                  <strong>Mon-Sat: 11AM</strong> - 23PM<br>
-                  Sunday: Closed
-                </p>
-              </div>
-            </div>
-    
-            <div class="col-lg-3 col-md-6 footer-links">
-              <h4>Follow Us</h4>
-              <div class="social-links d-flex">
-                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-              </div>
-            </div>
-    
+    <div class="container">
+      <div class="row gy-3">
+        <div class="col-lg-3 col-md-6 d-flex">
+          <i class="bi bi-geo-alt icon"></i>
+          <div>
+            <h4>Address</h4>
+            <p>
+              80 Stamford Rd<br>
+              Singapore, S178902 <br>
+            </p>
+          </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links d-flex">
+          <i class="bi bi-telephone icon"></i>
+          <div>
+            <h4>Reservations</h4>
+            <p>
+              <strong>Phone:</strong> +65 68087960
+              <br>
+              <strong>Email:</strong> contact@smu.edu.com.sg
+              <br>
+            </p>
           </div>
         </div>
-    
-        <div class="container">
-          <div class="copyright">
-            &copy; Copyright <strong><span>Appytizer</span></strong>. All Rights Reserved
-          </div>
-          <div class="credits">
-            <!-- All the links in the footer should remain intact. -->
-            <!-- You can delete the links only if you purchased the pro version. -->
-            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/ -->
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+
+        <div class="col-lg-3 col-md-6 footer-links d-flex">
+          <i class="bi bi-clock icon"></i>
+          <div>
+            <h4>Opening Hours</h4>
+            <p>
+              <strong>Monday to Friday : 8:30AM</strong> to 5:45PM
+              <br>
+              Saturday & Sunday: Closed
+            </p>
           </div>
         </div>
-    
-      </footer>
+
+        <div class="col-lg-3 col-md-6 footer-links">
+          <h4>Follow Us</h4>
+          <div class="social-links d-flex">
+            <a href="https://twitter.com/sgSMU" class="twitter"><i class="bi bi-twitter"></i></a>
+            <a href="https://www.facebook.com/sgsmu" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/sgsmuscis/?hl=en" class="instagram"><i class="bi bi-instagram"></i></a>
+            <a href="https://www.linkedin.com/school/singapore-management-university/" class="linkedin"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Appytizer</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/ -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+
+  </footer>
 
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
