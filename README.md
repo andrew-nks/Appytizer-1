@@ -20,7 +20,16 @@ Notes:
 - Style.css is the external CSS file for our webpage design.
 - The assest folder consist of all the images and javascript for some of design function. All images are accessed from the asset folder, followed by img foler.
 
+Navigation Diagram:
  <img width="863" alt="Screenshot 2022-11-13 at 21 18 47" src="https://user-images.githubusercontent.com/105425871/201523741-d1e21733-1526-4b8a-88ad-e87cfcf45255.png">
+ 
+ # How to install and run our web appication!
+- This method is applicable to both Mac OS and Windows OS
+
+Firstly, you have to clone this repository into your local environment
+1. On the '<> Code' page, click on the green 'code' button and a dropdown will appear.
+2. Make sure you're under the 'HTTPS' tab, and copy the URL.
+
 
 To do:
 1. nav bar 
