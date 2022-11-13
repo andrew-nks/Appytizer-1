@@ -38,7 +38,7 @@
                     <li class="dropdown"><a href="#"><span>Recipes</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                         <ul>
                             <li>
-                                <a href="upload.html">Upload Recipes</a>
+                                <a href="upload.html" id="upload">Upload Recipes</a>
                             </li>
                             <li>
                                 <a href="recipes.html">View Recipes</a>
@@ -56,14 +56,14 @@
                         </ul>
                     </li>
                     <!-- Only after user login then this will be appeared -->
-                    <li class="dropdown"><a href="#"><span>Account</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <li class="dropdown"><a href="#" id="account"><span>Account</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                         <ul>
                             <li>
-                                <a href="setting.html">Account Setting</a>
+                                <a href="setting.html" id="setting">Account Setting</a>
                             </li>
                             
                             <li>
-                                <a href="savedplaces.html"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Places</a>
+                                <a href="savedplaces.html" id="savedplaces"><i class="fa fa-heart" style="color:palevioletred"></i>Saved Places</a>
                             </li>
                         </ul>
                     </li>
@@ -291,7 +291,7 @@
       var accountLink = document.getElementById('account');
       var setting = document.getElementById('setting');
       var savedplaces = document.getElementById('savedplaces');
-      var savedrecipes = document.getElementById('savedrecipes');
+      
       if (status == null) {
         document.addEventListener('click', function (e) {
             if (e.target.id === uploadLink.id) {

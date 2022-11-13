@@ -184,7 +184,7 @@
             </nav>
 
             <!-- Login/Register  -> this will appear only if the website is not logged in -->
-            <a class="btn-book-a-table" href="register.html">Register/Login</a>
+            <a class="btn-book-a-table" id="login" href="register.html">Register/Login</a>
             <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
             <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
         </div>
@@ -293,6 +293,14 @@
               </div>
               
               <br>
+
+              <div class="container-fluid" >
+                <label for="description">Please enter a short description   </label>
+                
+                <textarea id="description" name="description" placeholder="Tell us about your recipe!" style='height:100px'></textarea>
+                <br>
+                <br>
+              </div>
 
               <div class="container-fluid" >
                 <label for="ingredients">Please enter the ingredients (ending with semicolon <bold>;</bold>): </label>

@@ -82,7 +82,7 @@
             </nav>
 
             <!-- Login/Register  -> this will appear only if the website is not logged in -->
-            <a class="btn-book-a-table" href="register.html">Register/Login</a>
+            <a class="btn-book-a-table" id="login" href="register.html">Register/Login</a>
             <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
             <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
         </div>
@@ -174,7 +174,23 @@
                                                                       </div>
                                                                     </div>`
               });
+                  // Login response
+          let email = sessionStorage.getItem('current_email');
+                      console.log(email);
 
+                      // Log out function
+                      
+                          
+                      if (status == 'loggedIn') {
+        
+                          document.getElementById("login").text = 'Logout';
+                          login.addEventListener('click', function () {
+                            sessionStorage.removeItem('status');
+                            sessionStorage.removeItem('current_email');
+                            window.location.href = "home.html";
+                            
+                          });
+                      };
               
               
           </script>
