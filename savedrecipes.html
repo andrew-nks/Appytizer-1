@@ -96,7 +96,75 @@
         </div>
 
         <!-- Content will be here -->
-        <section> </section>
+        <h1 style = "text-align:center;">Saved Recipes</h1>
+          <div class = "container-fluid" id = "app1">
+            
+            <div class = "row row-cols-1 row-cols-md-3 g-4" id = "row">
+              
+            </div>
+          </div>
+        <section> 
+          <script type="module" >
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
+            import { getStorage, ref, uploadBytes as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-storage.js";
+            
+            const firebaseConfig = {
+                    // Your configaration code here
+                    apiKey: "AIzaSyAFJmlaUL5fNmNKnX37xkB-2erJ_avQvRg",
+                  authDomain: "appytizer-d57f2.firebaseapp.com",
+                  databaseURL: "https://appytizer-d57f2-default-rtdb.asia-southeast1.firebasedatabase.app",
+                  projectId: "appytizer-d57f2",
+                  storageBucket: "appytizer-d57f2.appspot.com",
+                  messagingSenderId: "758981637290",
+                  appId: "1:758981637290:web:d4b61652c85549f0854cd3",
+                  };
+  
+                  // Initialize Firebase
+                  const app = initializeApp(firebaseConfig);
+                  const analytics = getAnalytics(app);
+                  
+                  // Get a reference to the database service
+                  import{
+      getFirestore, doc, getDoc, getDocs, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField
+  }
+  from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+                  
+                  const db = getFirestore();
+                //verify if logged in
+                let status = sessionStorage.getItem('status');
+                console.log(status)
+                console.log(sessionStorage);
+                if(status==null){
+                  document.getElementById("app1").innerHTML = "<h1 style = 'text-align:center;'>  Log in to see your saved recipes</h1>"
+                }
+                // Output the saved places
+                const querySnapshot = await getDocs(collection(db, "savedRecipes"));
+                querySnapshot.forEach((doc) => {
+                  
+                  var savedRecipeName = doc.id;
+                  var savedRecipeInfo = doc.data()
+                  //console.log(savedPlaceName);
+                  //console.log(savedPlaceInfo);
+                  if(sessionStorage.getItem("current_email")==savedRecipeInfo.newsavedRecipe.user){
+                  document.getElementById("row").innerHTML += `<div class="col">
+                                 <div class="card">
+                                 <img src="./assets/img/pasta.png" alt="Avatar" style="width:100%" class="card-img-top">
+                                 <div class="card-body">
+                                    <h5 class="card-title" id="recipe" value="5"><b>${savedRecipeInfo.newsavedRecipe.name} </b></h5> 
+                                    <p class="card-text" style="color: grey;font-size: 22px"> Calories: ${savedRecipeInfo.newsavedRecipe.calories}</p>
+                                  <p class="card-text" style="color: grey;font-size: 22px"> Fat: ${savedRecipeInfo.newsavedRecipe.fat}</p>
+                                  <p class="card-text" style="color: grey;font-size: 22px"> Carbs: ${savedRecipeInfo.newsavedRecipe.carbs}</p>
+                                  <p class="card-text" style="color: grey;font-size: 22px"> Protein: ${savedRecipeInfo.newsavedRecipe.protein}</p>
+                                  <p><a href="${savedRecipeInfo.newsavedRecipe.recipeName}.html" class="btn btn-primary">View Recipe</a></p>
+                                  
+                             </div>
+                            </div>
+                          </div>`;
+                }
+                });
+                </script>
+        </section>
 
     </main>
 
