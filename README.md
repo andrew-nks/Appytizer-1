@@ -46,7 +46,7 @@ Firstly, you have to download the zip file into your local environment
  - For Market to go, users can click the "Nearby Markets" button and allow to share their locations.
 <img width="1425" alt="Screenshot 2022-11-13 at 21 41 01" src="https://user-images.githubusercontent.com/105425871/201524793-805f20fd-e7fa-4e41-916f-aa3b4645aeec.png">
  
- - For Restaurants to go, users can search the food item they want (e.g. fish). They can also edit the raidius proximity if needed.
+ - For Restaurants to go, users can search the food item they want (e.g. fish). They can also edit the radius proximity if needed.
  <img width="1426" alt="Screenshot 2022-11-13 at 21 44 39" src="https://user-images.githubusercontent.com/105425871/201524933-ec663acb-f677-4859-9360-955dbc36e321.png">
 
 5. For Restaurants, users can save food places they like by double-clicking on the shop icon on the map and they will be added to "Saved Places" under Account tab. Users can then view their saved places there.
