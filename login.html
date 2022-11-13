@@ -220,7 +220,8 @@
     <!-- Disable links if not logged in -->
     <script>
       let status = sessionStorage.getItem('status');
-      console.log(status);
+      let email = sessionStorage.getItem('current_email');
+        
       var uploadLink = document.getElementById('upload');
       var accountLink = document.getElementById('account');
       var setting = document.getElementById('setting');
@@ -307,6 +308,7 @@
       if (pw == password) {
         
       sessionStorage.setItem('status','loggedIn');
+      sessionStorage.setItem('current_email',email);
       window.location.href = "home.html";
         
       } else {
