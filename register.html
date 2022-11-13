@@ -73,7 +73,7 @@
             </nav>
 
             <!-- Login/Register  -> this will appear only if the website is not logged in -->
-            <a class="btn-book-a-table" href="register.html">Register/Login</a>
+            <!-- <a class="btn-book-a-table" href="register.html">Register/Login</a> -->
             <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
             <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
         </div>
@@ -330,20 +330,20 @@ from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
     // Validate input fields
     if (validate_email(email) == false || validate_password(password) == false) {
       msg += 'Email or Password is invalid\n';
-      return
+      
       // Don't continue running the code
     }
     if (validate_field(username) == false || validate_field(retype_password) == false) {
       msg += 'One or More Extra Fields is invalid\n';
-      return
+      
     }
     if (password.length < 6) {
       msg += 'Password must be at least 6 characters\n';
-      return
+      
     }
     if (password != retype_password) {
       msg += 'Passwords do not match\n';
-      return
+      
     }
     
     if (msg != "") {
