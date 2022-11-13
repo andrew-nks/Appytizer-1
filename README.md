@@ -2,9 +2,9 @@
 IS216 Project - G5 - Appytizer
 
 Group Members:
-- Ng Kai Shen Andrew (
+- Ng Kai Shen Andrew (andrew.ng.2021@scis.smu.edu.sg)
 - Lee Si Ying, Glandys (glandys.lee.2019@scis.smu.edu.sg)
-- Low Zhe Liang Ken ()
+- Low Zhe Liang Ken (zllow.2021@smu.edu.sg)
 - Seah Xin Tian Clarissa (clarissas.2021@scis.smu.edu.sg)
 
 # Project Overview
